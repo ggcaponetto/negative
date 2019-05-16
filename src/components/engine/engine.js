@@ -43,10 +43,16 @@ function UIElement(props) {
 	const [engineComponent, setEngineComponent] = useState(props.engineComponents[0]);
 	const directions = ["column", "row"];
 	const [direction, setDirection] = useState(directions[0]);
+	const [flex, setFlex] = useState(1);
+
 
 	useEffect(() => {
 		console.debug(`useEffect`, {components, engineComponent, engineComponents: props.engineComponents});
 	}, []);
+
+	useEffect(() => {
+		console.debug(`useEffect - flex`, {flex});
+	}, [flex]);
 
 
 	const onAdd = () => {
@@ -71,6 +77,12 @@ function UIElement(props) {
 		setDirection(e.target.value);
 	};
 
+	const onFlexChange = (e) => {
+		e.persist();
+		console.debug(`onFlexChange`, {e, value: e.target.value});
+		setFlex(e.target.value);
+	};
+
 	const onChildRemoved = (index) => {
 		let newComponents = components.filter((component, componentIndex) => {
 			if (index !== componentIndex) {
@@ -81,6 +93,7 @@ function UIElement(props) {
 		setComponents(newComponents);
 	};
 
+
 	const getComponents = () => {
 		let subComponents = [];
 		components.forEach((component, componentIndex) => {
@@ -88,10 +101,11 @@ function UIElement(props) {
 				<div className={`subcomponent direction-${direction}`} key={componentIndex}>
 					<UIElement
 						key={`ui-component-fragment-${component.id}`}
-						id={`${props.id}-${component.id}`}
+						id={props.id}
 						engineComponents={props.engineComponents}
 						onChildRemoved={onChildRemoved}
 						componentIndex={componentIndex}
+						isRoot={false}
 					/>
 				</div>
 
@@ -159,6 +173,17 @@ function UIElement(props) {
 			),
 			(
 				<div className={"control"} key={++key}>
+					<input
+						type={"number"}
+						onChange={(e) => {
+							onFlexChange(e)
+						}}
+						value={flex}
+					/>
+				</div>
+			),
+			(
+				<div className={"control"} key={++key}>
 					<button onClick={() => {
 						onAdd()
 					}}>
@@ -179,7 +204,7 @@ function UIElement(props) {
 				</div>
 			)
 		}
-		if (props.onChildRemoved !== null) {
+		if (props.isRoot !== true) {
 			controls.push(
 				<div className={"control"} key={++key}>
 					<button onClick={() => {
@@ -246,8 +271,9 @@ function Engine() {
 			<UIElement
 				id={1}
 				engineComponents={[{name: "UIElementContainer", hook: UIElementContainer}, {name: "EngineComponent1", hook: EngineComponent1}, {name: "EngineComponent2", hook: EngineComponent2}, {name: "EngineComponent3", hook: EngineComponent3},]}
-				onChildRemoved={null}
+				onChildRemoved={() => {}}
 				componentIndex={0}
+				isRoot={true}
 			/>
 		</EngineContext.Provider>
 	);

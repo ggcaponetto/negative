@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c26eeacb-3389-4248-9da0-6b05ac3e9834" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/components/engine/engine.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/engine/engine.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/engine/engine.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/engine/engine.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
@@ -68,14 +67,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="96" lean-forward="true" selection-start-line="96" selection-end-line="96" />
+            <state relative-caret-position="252">
+              <caret line="99" column="31" lean-forward="true" selection-end-line="282" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
                 <element signature="n#!!block;n#UIElement#0" />
                 <element signature="n#!!block;n#EngineComponent#1" />
                 <element signature="n#!!block;n#EngineComponent3#0" />
                 <element signature="n#!!block;n#EngineComponent3#1" />
+                <element signature="e#2861#3921#0" />
                 <element signature="e#2908#3295#0" />
                 <element signature="e#3391#3706#0" />
                 <element signature="n#!!block;n#Version#0" />
@@ -100,6 +100,8 @@
       <find>direction</find>
       <find>engineComponent</find>
       <find>engineComponents</find>
+      <find>onFlexChange</find>
+      <find>onChildRemoved</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -211,12 +213,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558023598722</updated>
-      <workItem from="1558023600099" duration="21193000" />
+      <workItem from="1558023600099" duration="24074000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21193000" />
+    <option name="totallyTimeSpent" value="24074000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1186" extended-state="6" />
@@ -231,7 +233,7 @@
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" />
-      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.1699029" />
+      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.21650486" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -325,14 +327,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="96" lean-forward="true" selection-start-line="96" selection-end-line="96" />
+        <state relative-caret-position="252">
+          <caret line="99" column="31" lean-forward="true" selection-end-line="282" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
             <element signature="n#!!block;n#UIElement#0" />
             <element signature="n#!!block;n#EngineComponent#1" />
             <element signature="n#!!block;n#EngineComponent3#0" />
             <element signature="n#!!block;n#EngineComponent3#1" />
+            <element signature="e#2861#3921#0" />
             <element signature="e#2908#3295#0" />
             <element signature="e#3391#3706#0" />
             <element signature="n#!!block;n#Version#0" />
