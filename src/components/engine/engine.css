@@ -11,9 +11,32 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    overflow: auto;
 }
 .ui-element .direction-row{
     display: flex;
     flex-direction: row;
     flex: 1;
+    overflow: auto;
+}
+.ui-element .controls {
+    display: flex;
+}
+
+.ui-element .controls .control{
+    display: flex;
+    flex: 1;
+}
+.ui-element .controls .control *:first-child{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.ui-element .component{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
 }
