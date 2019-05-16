@@ -24,6 +24,8 @@ function UIElement(props) {
 	const engineContext = useContext(EngineContext);
 	const [components, setComponents] = useState([]);
 	const [engineComponent, setEngineComponent] = useState(props.engineComponents[0]);
+	const directions = ["column", "row"];
+	const [direction, setDirection] = useState(directions[0]);
 
 	useEffect(() => {
 		console.debug(`useEffect`, {components, engineComponent, engineComponents: props.engineComponents});
@@ -35,11 +37,9 @@ function UIElement(props) {
 		console.debug(`onAdd`, {components, newComponents});
 		setComponents(newComponents);
 	};
-	const onRemove = () => {
-		let newComponents = components.concat([]);
-		newComponents.pop();
-		console.debug(`onRemove`, {components, newComponents});
-		setComponents(newComponents);
+	const onRemoveChildren = () => {
+		console.debug(`onRemoveChildren`, {components});
+		setComponents([]);
 	};
 	const onEngineComponentChange = (e) => {
 		e.persist();
@@ -48,9 +48,22 @@ function UIElement(props) {
 		setEngineComponent(newEngineComponent);
 	};
 
+	const onDirectionChange = (e) => {
+		e.persist();
+		console.debug(`onDirectionChange`, {e ,props});
+		setDirection(e.target.value);
+	};
+
 	const getComponents = () => {
 		let subComponents = [];
-		components.forEach((component) => {
+		components.forEach((component, componentIndex) => {
+			if(componentIndex < components.length){
+				subComponents.push(
+					<React.Fragment key={`ui-component-fragment-separator${component.id}`}>
+						separator
+					</React.Fragment>
+				)
+			}
 			subComponents.push(
 				<React.Fragment key={`ui-component-fragment-${component.id}`}>
 					<div className="ui-component">
@@ -60,7 +73,7 @@ function UIElement(props) {
 				</React.Fragment>
 			)
 		});
-		return subComponents;
+		return <div className={`direction-${direction}`}>{subComponents}</div>;
 	};
 
 	return (
@@ -68,8 +81,12 @@ function UIElement(props) {
 			<div className="ui-component">
 				ui-component-{props.id}
 			</div>
-			<button onClick={() => {onAdd()}}>add</button>
-			<button onClick={() => {onRemove()}}>remove</button>
+			<button onClick={() => {onAdd()}}>add ui element</button>
+			{(() => {
+				if(components.length > 0){
+					return <button onClick={() => {onRemoveChildren()}}>remove children</button>
+				}
+			})()}
 			<select
 				onChange={(e) => {onEngineComponentChange(e)}}
 				value={engineComponent.name}
@@ -87,7 +104,24 @@ function UIElement(props) {
 					})
 				}
 			</select>
-			{engineComponent}
+			<select
+				onChange={(e) => {onDirectionChange(e)}}
+				value={direction}
+			>
+				{
+					directions.map((direction, directionIndex) => {
+						return (
+							<option
+								key={directionIndex}
+								value={direction}
+							>
+								{direction}
+							</option>
+						)
+					})
+				}
+			</select>
+			{direction} - {engineComponent}
 			{getComponents()}
 		</div>
 	);
