@@ -217,6 +217,11 @@ function UIElement(props) {
 			</div>
 			{engineComponent.hook()}
 			{getComponents()}
+			<div className={"controls"}>
+				<div className={"resize-handle"} onDrag={(e) => {
+					console.debug(`onDrag`, {e});
+				}}>handle</div>
+			</div>
 		</div>
 	);
 }
