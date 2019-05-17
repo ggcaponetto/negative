@@ -10,13 +10,11 @@
 .ui-element .direction-column{
     display: flex;
     flex-direction: column;
-    flex: 1;
     overflow: auto;
 }
 .ui-element .direction-row{
     display: flex;
     flex-direction: row;
-    flex: 1;
     overflow: auto;
 }
 .ui-element .controls {

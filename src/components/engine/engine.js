@@ -30,11 +30,7 @@ function EngineComponent3(props) {
 }
 
 function UIElementContainer(props) {
-	return (
-		<div className={`ui-element-container`}>
-			ui-element-container
-		</div>
-	);
+	return null;
 }
 
 function UIElement(props) {
@@ -98,28 +94,23 @@ function UIElement(props) {
 		let subComponents = [];
 		components.forEach((component, componentIndex) => {
 			subComponents.push(
-				<div className={`subcomponent direction-${direction}`} key={componentIndex}>
-					<UIElement
-						key={`ui-component-fragment-${component.id}`}
-						id={props.id}
-						engineComponents={props.engineComponents}
-						onChildRemoved={onChildRemoved}
-						componentIndex={componentIndex}
-						isRoot={false}
-					/>
-				</div>
-
+				<UIElement
+					key={`${componentIndex}`}
+					id={props.id}
+					engineComponents={props.engineComponents}
+					onChildRemoved={onChildRemoved}
+					componentIndex={componentIndex}
+					isRoot={false}
+				/>
 			)
 		});
-		if(subComponents.length > 0){
-			return (
-				<div className={`subcomponents direction-${direction}`}>
-					{subComponents}
-				</div>
-			)
-		} else {
-			return null;
-		}
+		return (
+			<div
+				style={{display: "flex", flex: 1, flexDirection: direction}}
+			>
+				{subComponents}
+			</div>
+		);
 	};
 
 	const getUIElementControls = () => {
@@ -218,25 +209,13 @@ function UIElement(props) {
 		return controls;
 	};
 
-	const displayComponent = () => {
-		console.debug(`displayComponent`, {engineComponent});
-		if(engineComponent.name !== "UIElementContainer"){
-			return (
-				<div className={"component subcomponent engine-component"}>
-					{engineComponent.hook()}
-				</div>
-			);
-		} else {
-			return null;
-		}
-	};
 
 	return (
-		<div className={`ui-element`}>
+		<div className={`ui-element`} style={{flex: flex}}>
 			<div className={"controls"}>
 				{getUIElementControls()}
 			</div>
-			{displayComponent()}
+			{engineComponent.hook()}
 			{getComponents()}
 		</div>
 	);
