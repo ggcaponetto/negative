@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import './engine.css';
 
 const defaultEngineContext = {version: "0.0.1"};
@@ -35,20 +35,23 @@ function UIElementContainer(props) {
 
 function UIElement(props) {
 	const engineContext = useContext(EngineContext);
+	const uiElementRef = useRef(null);
 	const [components, setComponents] = useState([]);
 	const [engineComponent, setEngineComponent] = useState(props.engineComponents[0]);
 	const directions = ["column", "row"];
 	const [direction, setDirection] = useState(directions[0]);
-	const [flex, setFlex] = useState(1);
+	const [selfFlex, setSelfFlex] = useState(1);
+	const [percentage, setPercentage] = useState(1);
 
 
 	useEffect(() => {
 		console.debug(`useEffect`, {components, engineComponent, engineComponents: props.engineComponents});
 	}, []);
 
+
 	useEffect(() => {
-		console.debug(`useEffect - flex`, {flex});
-	}, [flex]);
+		console.debug(`useEffect - flex - updateSelfFlex`, {selfFlex});
+	});
 
 
 	const onAdd = () => {
@@ -73,10 +76,24 @@ function UIElement(props) {
 		setDirection(e.target.value);
 	};
 
-	const onFlexChange = (e) => {
+	const adaptFlex = (e) => {
 		e.persist();
-		console.debug(`onFlexChange`, {e, value: e.target.value});
-		setFlex(e.target.value);
+		console.debug(`adaptFlex`, {e, value: e.target.value});
+
+		let siblingNodes = getSiblingNodes();
+
+		let flexArray = Array.from(siblingNodes).map(node => parseFloat(node.style.flex.split(" ")[0]));
+		let flexSum = flexArray.reduce((p, c) => p + c, 0);
+		console.debug(`onFlexChange`, {flexArray, flexSum, percentage});
+
+		let flex = (flexSum/100)*percentage;
+		setSelfFlex(flex);
+	};
+
+	const onPercentageChange = (e) => {
+		e.persist();
+		console.debug(`onPercentageChange`, {e, value: e.target.value});
+		setPercentage(parseFloat(e.target.value));
 	};
 
 	const onChildRemoved = (index) => {
@@ -88,7 +105,6 @@ function UIElement(props) {
 		console.debug(`onChildRemoved`, {components, newComponents});
 		setComponents(newComponents);
 	};
-
 
 	const getComponents = () => {
 		let subComponents = [];
@@ -106,7 +122,7 @@ function UIElement(props) {
 		});
 		return (
 			<div
-				style={{display: "flex", flex: 1, flexDirection: direction}}
+				style={{display: "flex", flex: selfFlex, flexDirection: direction}}
 			>
 				{subComponents}
 			</div>
@@ -167,10 +183,30 @@ function UIElement(props) {
 					<input
 						type={"number"}
 						onChange={(e) => {
-							onFlexChange(e)
+
 						}}
-						value={flex}
+						value={selfFlex}
 					/>
+				</div>
+			),
+			(
+				<div className={"control"} key={++key}>
+					<input
+						type={"number"}
+						onChange={(e) => {
+							onPercentageChange(e)
+						}}
+						value={percentage}
+					/>
+				</div>
+			),
+			(
+				<div className={"control"} key={++key}>
+					<button onClick={(e) => {
+						adaptFlex(e);
+					}}>
+						set %
+					</button>
 				</div>
 			),
 			(
@@ -209,18 +245,47 @@ function UIElement(props) {
 		return controls;
 	};
 
+	const getSiblingNodes = () => {
+		console.debug(`getSiblingUIElements`, {uiElementRef});
+		if(uiElementRef && uiElementRef.current){
+			let parentNode =  uiElementRef.current.parentNode;
+			let siblingNodes = parentNode.children;
+			return siblingNodes;
+		}
+		return [];
+	};
+	const getParentNode = () => {
+		console.debug(`getParentNode`, {uiElementRef});
+		if(uiElementRef && uiElementRef.current){
+			let parentNode =  uiElementRef.current.parentNode;
+			return parentNode;
+		}
+		return null;
+	};
+
+	const onHandleDrag = (e) => {
+		e.persist();
+		let dragX = e.pageX;
+		let dragY = e.pageY;
+		console.debug(`onHandleDrag`, {dragX, dragY, e});
+	};
 
 	return (
-		<div className={`ui-element`} style={{flex: flex}}>
+		<div className={`ui-element`} style={{flex: selfFlex}} ref={uiElementRef}>
 			<div className={"controls"}>
 				{getUIElementControls()}
 			</div>
 			{engineComponent.hook()}
 			{getComponents()}
 			<div className={"controls"}>
-				<div className={"resize-handle"} onDrag={(e) => {
-					console.debug(`onDrag`, {e});
-				}}>handle</div>
+				<div
+					className={"resize-handle"}
+					onDragStart={onHandleDrag}
+					onDrag={onHandleDrag}
+					onDragEnd={onHandleDrag}
+				>
+					handle
+				</div>
 			</div>
 		</div>
 	);
