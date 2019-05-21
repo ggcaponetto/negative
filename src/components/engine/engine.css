@@ -1,48 +1,32 @@
-.engine{
-
-}
-
-.ui-element{
+.UIContainer{
     display: flex;
+    flex: 1;
     flex-direction: column;
-    flex: 1;
-}
-.ui-element .direction-column{
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-}
-.ui-element .direction-row{
-    display: flex;
-    flex-direction: row;
-    overflow: auto;
-}
-.ui-element .controls {
-    display: flex;
+    position: relative;
 }
 
-.ui-element .controls .control{
+.ResizeBar{
+    position: absolute;
     display: flex;
     flex: 1;
-}
-.ui-element .controls .control *:first-child{
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-}
-
-.ui-element .component{
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-}
-
-.ui-element .controls .resize-handle{
+    top: 0;
+    left: 0;
+    right: 0;
     cursor: move;
-    display: flex;
-    flex: 1;
+    background: grey;
     align-items: center;
     justify-content: center;
+}
+
+.UIContainer .section{
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.UIContainer .section.top{
+    background: aquamarine;
+}
+.UIContainer .section.bottom{
+    background: #ff5b00;
 }
