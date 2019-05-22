@@ -8,9 +8,6 @@
     position: absolute;
     display: flex;
     flex: 1;
-    top: 0;
-    left: 0;
-    right: 0;
     cursor: move;
     background: grey;
     align-items: center;
@@ -19,14 +16,12 @@
 
 .UIContainer .section{
     position: absolute;
-    left: 0;
-    right: 0;
     overflow: auto;
 }
 
-.UIContainer .section.top{
+.UIContainer .section.one{
     background: aquamarine;
 }
-.UIContainer .section.bottom{
+.UIContainer .section.two{
     background: #ff5b00;
 }
