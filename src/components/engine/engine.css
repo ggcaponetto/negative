@@ -4,21 +4,6 @@
     position: relative;
 }
 
-.ResizeBar{
-    position: absolute;
-    display: flex;
-    flex: 1;
-    cursor: move;
-    background: grey;
-    align-items: center;
-    justify-content: center;
-}
-
-.UIContainer .section{
-    position: absolute;
-    overflow: auto;
-}
-
 .UIContainer .section.one{
     background: aquamarine;
 }
