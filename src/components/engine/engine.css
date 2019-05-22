@@ -1,7 +1,6 @@
 .UIContainer{
     display: flex;
     flex: 1;
-    flex-direction: column;
     position: relative;
 }
 
@@ -22,6 +21,7 @@
     position: absolute;
     left: 0;
     right: 0;
+    overflow: auto;
 }
 
 .UIContainer .section.top{

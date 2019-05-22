@@ -9,37 +9,49 @@ function ResizeBar(props) {
 	const resizeBar = useRef(null);
 	useEffect(() => {
 		console.debug(`${ResizeBar.name} useEffect`);
-		setStyle({
-			top: props.uiContainer.current.clientHeight - resizeBar.current.clientHeight
+		let containerHeight = props.uiContainer.current.clientHeight;
+		let resizeBarHeight = resizeBar.current.clientHeight;
+		let resizeBarTopBorderPosition = containerHeight - resizeBarHeight;
+		// Cap the resizeBarTopBorderPosition.
+		// On mouse release the clientY could be negative or higher than te container height
+		let cappedResizeBarTopBorderPosition = Math.min(Math.max(resizeBarTopBorderPosition, 0), containerHeight - resizeBarHeight);
+
+		console.debug(`${ResizeBar.name} handleDrag`, {
+			resizeBarTopBorderPosition, resizeBarHeight, containerHeight, uiContainer: props.uiContainer
 		});
-		props.onResize({
-			sectionTop: {
-				top: 0, bottom: resizeBar.current.clientHeight
-			},
-			sectionBottom: {
-				top: props.uiContainer.current.clientHeight, bottom: 0
-			}
-		})
+
+		setStyle({
+			top: cappedResizeBarTopBorderPosition
+		});
+		props.onResize({cappedResizeBarTopBorderPosition, resizeBarHeight})
 	}, []);
 
 	const handleDrag = (e) => {
-		let pixelsFromTop = Math.min(e.clientY, props.uiContainer.current.clientHeight - resizeBar.current.clientHeight);
+
+		// Detect if the event comes from a touch enabled device
+		let isTouch = e.touches;
+
+		let resizeBarTopBorderPosition = e.clientY;
+		if(isTouch && e.touches[0]){
+			resizeBarTopBorderPosition = e.touches[0].clientY;
+		} else {
+			resizeBarTopBorderPosition = e.clientY;
+		}
+		let containerHeight = props.uiContainer.current.clientHeight;
+		let resizeBarHeight = resizeBar.current.clientHeight;
+		// Cap the resizeBarTopBorderPosition.
+		// On mouse release the clientY could be negative or higher than te container height
+		let cappedResizeBarTopBorderPosition = Math.min(Math.max(resizeBarTopBorderPosition, 0), containerHeight - resizeBarHeight);
+
 		console.debug(`${ResizeBar.name} handleDrag`, {
-			e, uiContainer: props.uiContainer
+			e, resizeBarTopBorderPosition, resizeBarHeight, containerHeight, uiContainer: props.uiContainer
 		});
 
 		setStyle({
-			top: pixelsFromTop
+			top: cappedResizeBarTopBorderPosition
 		});
 
-		props.onResize({
-			sectionTop: {
-				top: 0, bottom: props.uiContainer.current.clientHeight - pixelsFromTop
-			},
-			sectionBottom: {
-				top: pixelsFromTop + resizeBar.current.clientHeight, bottom: 0
-			}
-		})
+		props.onResize({cappedResizeBarTopBorderPosition, resizeBarHeight})
 	};
 
 	return (
@@ -49,6 +61,8 @@ function ResizeBar(props) {
 			style={style}
 			ref={resizeBar}
 			onDragStart={(e) => {
+				e.persist();
+				// e.preventDefault();
 				console.debug(`${ResizeBar.name} onDragStart`, e);
 				let ghostElement = document.createElement("div");
 				ghostElement.style.display = "none"; /* or visibility: hidden, or any of the above */
@@ -56,12 +70,27 @@ function ResizeBar(props) {
 				handleDrag(e);
 			}}
 			onDrag={(e) => {
-				e.preventDefault();
+				e.persist();
+				// e.preventDefault();
 				console.debug(`${ResizeBar.name} onDrag`, e);
 				handleDrag(e);
 			}}
 			onDragEnd={(e) => {
+				e.persist();
+				// e.preventDefault();
 				console.debug(`${ResizeBar.name} onDragEnd`, e);
+				handleDrag(e);
+			}}
+			onTouchStart={(e) => {
+				e.persist();
+				// e.preventDefault();
+				console.debug(`${ResizeBar.name} onTouchStart`, e);
+				handleDrag(e);
+			}}
+			onTouchMove={(e) => {
+				e.persist();
+				// e.preventDefault();
+				console.debug(`${ResizeBar.name} onTouchMove`, e);
 				handleDrag(e);
 			}}
 		>
@@ -71,23 +100,52 @@ function ResizeBar(props) {
 }
 
 function UIContainer() {
-	const [resizeBarData, setResizeBarData] = useState({
-		sectionTop: {
-			top: 0, bottom: 0
-		},
-		sectionBottom: {
-			top: 0, bottom: 0
-		}
-	});
+	const directions = {column: "column", row: "row"};
+	const [resizeBarData, setResizeBarData] = useState(null);
+	const [direction, setDirection] = useState(directions.column);
+
 	const uiContainer = useRef(null);
 
 	useEffect(() => {
 		console.debug(`${UIContainer.name} useEffect`);
 	}, []);
 
+	const getTopSection = () => {
+		if(resizeBarData){
+			return (
+				<div className={"section top"} style={{
+					top: 0,
+					bottom: uiContainer.current.clientHeight - resizeBarData.cappedResizeBarTopBorderPosition
+				}}>
+					{JSON.stringify(resizeBarData, null, 4)}
+				</div>
+			)
+		} else {
+			return null;
+		}
+	};
+
+	const getBottomSection = () => {
+		if(resizeBarData){
+			return (
+				<div className={"section bottom"} style={{
+					top: resizeBarData.cappedResizeBarTopBorderPosition + resizeBarData.resizeBarHeight,
+					bottom: 0
+				}}>
+					{JSON.stringify(resizeBarData, null, 4)}
+				</div>
+			)
+		} else {
+			return null;
+		}
+	};
+
 	return (
 		<div
 			className={UIContainer.name}
+			style={{
+				flexDirection: direction
+			}}
 			ref={uiContainer}
 			onDrop={(e) => {
 				e.preventDefault();
@@ -102,16 +160,8 @@ function UIContainer() {
 					setResizeBarData(resizeBarData);
 				}}
 			/>
-			<div className={"section top"} style={{
-				top: resizeBarData.sectionTop.top, bottom: resizeBarData.sectionTop.bottom
-			}}>
-				{JSON.stringify(resizeBarData.sectionTop)}
-			</div>
-			<div className={"section bottom"} style={{
-				top: resizeBarData.sectionBottom.top, bottom: resizeBarData.sectionBottom.bottom
-			}}>
-				{JSON.stringify(resizeBarData.sectionBottom)}
-			</div>
+			{getTopSection()}
+			{getBottomSection()}
 		</div>
 	);
 }
