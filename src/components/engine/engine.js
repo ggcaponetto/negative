@@ -6,22 +6,10 @@ export const EngineContext = React.createContext(defaultEngineContext);
 
 function ResizeBar(props) {
 	const resizeBar = useRef(null);
+	const [barEvents, setBarEvents] = useState([]);
+
 	useEffect(() => {
 		console.debug(`${ResizeBar.name} useEffect`);
-		initialSetup(props.direction, props.directions);
-		return () => {
-			console.debug(`${ResizeBar.name} useEffect - cleanup`);
-		}
-	}, [props.direction]);
-
-	useEffect(() => {
-		console.debug(`${ResizeBar.name} useEffect - rendering`);
-		return () => {
-			console.debug(`${ResizeBar.name} useEffect - rendering - cleanup`);
-		}
-	});
-
-	const initialSetup = (direction, directions) => {
 		let containerHeight = props.uiContainer.current.clientHeight;
 		let containerWidth = props.uiContainer.current.clientWidth;
 		let resizeBarHeight = resizeBar.current.clientHeight;
@@ -39,7 +27,9 @@ function ResizeBar(props) {
 			containerHeight,
 			uiContainer: props.uiContainer
 		});
-		if (direction === directions.column) {
+
+		let resizeBarStyle = null;
+		if (props.direction === props.directions.column) {
 			let columnStyle = {
 				position: "absolute",
 				display: "flex",
@@ -52,9 +42,9 @@ function ResizeBar(props) {
 				left: 0,
 				right: 0
 			};
-			props.onResizeBarStyleChange(columnStyle);
+			resizeBarStyle = columnStyle;
 		}
-		else if (direction === directions.row) {
+		else if (props.direction === props.directions.row) {
 			let rowStyle = {
 				position: "absolute",
 				display: "flex",
@@ -67,15 +57,99 @@ function ResizeBar(props) {
 				bottom: 0,
 				left: containerWidth - resizeBarWidth,
 			};
-			props.onResizeBarStyleChange(rowStyle);
+			resizeBarStyle = rowStyle;
 		}
-		props.onResize({
+		setBarEvents(barEvents.concat([
+			{
+				cappedResizeBarTopBorderPosition,
+				cappedResizeBarLeftBorderPosition,
+				resizeBarHeight,
+				resizeBarWidth,
+				resizeBarStyle
+			}
+		]));
+		return () => {
+			console.debug(`${ResizeBar.name} useEffect`);
+		}
+	}, []);
+
+	useEffect(() => {
+		console.debug(`${ResizeBar.name} useEffect - direction`);
+		let containerHeight = props.uiContainer.current.clientHeight;
+		let containerWidth = props.uiContainer.current.clientWidth;
+		let resizeBarHeight = resizeBar.current.clientHeight;
+		let resizeBarWidth = resizeBar.current.clientWidth;
+		let resizeBarTopBorderPosition = containerHeight - resizeBarHeight;
+		let resizeBarLeftBorderPosition = containerWidth - resizeBarWidth;
+		let cappedResizeBarTopBorderPosition = Math.min(Math.max(resizeBarTopBorderPosition, 0), containerHeight - resizeBarHeight);
+		let cappedResizeBarLeftBorderPosition = Math.min(Math.max(resizeBarLeftBorderPosition, 0), containerWidth - resizeBarWidth);
+		console.debug(`${ResizeBar.name} initialSetup - direction change`, {
+			resizeBarTopBorderPosition,
 			cappedResizeBarTopBorderPosition,
 			cappedResizeBarLeftBorderPosition,
 			resizeBarHeight,
-			resizeBarWidth
-		})
-	};
+			resizeBarWidth,
+			containerHeight,
+			uiContainer: props.uiContainer
+		});
+
+		let resizeBarStyle = null;
+		if (props.direction === props.directions.column) {
+			let columnStyle = {
+				position: "absolute",
+				display: "flex",
+				flex: 1,
+				cursor: "move",
+				background: "grey",
+				alignItems: "center",
+				justifyContent: "center",
+				top: containerHeight - resizeBarHeight,
+				left: 0,
+				right: 0
+			};
+			resizeBarStyle = columnStyle;
+		}
+		else if (props.direction === props.directions.row) {
+			let rowStyle = {
+				position: "absolute",
+				display: "flex",
+				flex: 1,
+				cursor: "move",
+				background: "grey",
+				alignItems: "center",
+				justifyContent: "center",
+				top: 0,
+				bottom: 0,
+				left: containerWidth - resizeBarWidth,
+			};
+			resizeBarStyle = rowStyle;
+		}
+		setBarEvents(barEvents.concat([
+			{
+				cappedResizeBarTopBorderPosition,
+				cappedResizeBarLeftBorderPosition,
+				resizeBarHeight,
+				resizeBarWidth,
+				resizeBarStyle
+			}
+		]));
+		return () => {
+			console.debug(`${ResizeBar.name} useEffect`);
+		}
+	}, [props.direction]);
+
+	useEffect(() => {
+		console.debug(`${ResizeBar.name} useEffect - barEvents`);
+		let lastBarEvent = [].concat(barEvents).pop();
+		console.debug(`${ResizeBar.name} useEffect - barEvents`, {lastBarEvent});
+		if(lastBarEvent){
+			props.onBarEvent(lastBarEvent);
+		}
+		return () => {
+			console.debug(`${ResizeBar.name} useEffect - barEvents`);
+		}
+	}, [barEvents]);
+
 	const handleDrag = (e) => {
 		let isTouch = e.touches;
 		let resizeBarTopBorderPosition = e.clientY;
@@ -90,10 +164,12 @@ function ResizeBar(props) {
 		let containerWidth = props.uiContainer.current.clientWidth;
 		let resizeBarHeight = resizeBar.current.clientHeight;
 		let resizeBarWidth = resizeBar.current.clientWidth;
+
 		// Cap the resizeBarTopBorderPosition.
 		// On mouse release the clientY could be negative or higher than te container height
 		let cappedResizeBarTopBorderPosition = Math.min(Math.max(resizeBarTopBorderPosition, 0), containerHeight - resizeBarHeight);
 		let cappedResizeBarLeftBorderPosition = Math.min(Math.max(resizeBarLeftBorderPosition, 0), containerWidth - resizeBarWidth);
+
 		console.debug(`${ResizeBar.name} handleDrag`, {
 			e,
 			resizeBarTopBorderPosition,
@@ -103,6 +179,8 @@ function ResizeBar(props) {
 			containerHeight,
 			uiContainer: props.uiContainer
 		});
+
+		let resizeBarStyle = null;
 		if (props.direction === props.directions.column) {
 			let columnStyle = {
 				position: "absolute",
@@ -116,8 +194,9 @@ function ResizeBar(props) {
 				left: 0,
 				right: 0
 			};
-			props.onResizeBarStyleChange(columnStyle);
-		} else if (props.direction === props.directions.row) {
+			resizeBarStyle = columnStyle;
+		}
+		else if (props.direction === props.directions.row) {
 			let rowStyle = {
 				position: "absolute",
 				display: "flex",
@@ -130,14 +209,17 @@ function ResizeBar(props) {
 				bottom: 0,
 				left: cappedResizeBarLeftBorderPosition,
 			};
-			props.onResizeBarStyleChange(rowStyle);
+			resizeBarStyle = rowStyle;
 		}
-		props.onResize({
-			cappedResizeBarTopBorderPosition,
-			cappedResizeBarLeftBorderPosition,
-			resizeBarHeight,
-			resizeBarWidth
-		})
+		setBarEvents(barEvents.concat([
+			{
+				cappedResizeBarTopBorderPosition,
+				cappedResizeBarLeftBorderPosition,
+				resizeBarHeight,
+				resizeBarWidth,
+				resizeBarStyle
+			}
+		]))
 	};
 
 	return (
@@ -187,13 +269,13 @@ function ResizeBar(props) {
 
 function UIContainer() {
 	const directions = {column: "column", row: "row"};
-	const [resizeBarData, setResizeBarData] = useState(null);
-	const [resizeBarStyle, setResizeBarStyle] = useState({});
-	const [direction, setDirection] = useState(directions.row);
+	const [barEvents, setBarEvents] = useState([]);
+	const [direction, setDirection] = useState(directions.column);
 	const uiContainer = useRef(null);
 
 	function getSection1(){
-		if (resizeBarData) {
+		let lastBarEvent = [].concat(barEvents).pop();
+		if (lastBarEvent) {
 			if (direction === directions.column) {
 				return (
 					<div
@@ -204,10 +286,11 @@ function UIContainer() {
 							top: 0,
 							left: 0,
 							right: 0,
-							bottom: uiContainer.current.clientHeight - resizeBarData.cappedResizeBarTopBorderPosition
+							bottom: uiContainer.current.clientHeight - lastBarEvent.cappedResizeBarTopBorderPosition,
+							background: "aquamarine"
 						}}
 					>
-						{JSON.stringify(resizeBarData, null, 4)}
+						{JSON.stringify(lastBarEvent, null, 4)}
 						<button
 							onClick={() => {
 								let newDirection = direction === directions.column ? directions.row : directions.column;
@@ -227,10 +310,11 @@ function UIContainer() {
 							top: 0,
 							bottom: 0,
 							left: 0,
-							right: uiContainer.current.clientWidth - resizeBarData.cappedResizeBarLeftBorderPosition,
+							right: uiContainer.current.clientWidth - lastBarEvent.cappedResizeBarLeftBorderPosition,
+							background: "aquamarine"
 						}}
 					>
-						{JSON.stringify(resizeBarData, null, 4)}
+						{JSON.stringify(lastBarEvent, null, 4)}
 						<button
 							onClick={() => {
 								let newDirection = direction === directions.column ? directions.row : directions.column;
@@ -247,18 +331,20 @@ function UIContainer() {
 		}
 	}
 	function getSection2(){
-		if (resizeBarData) {
+		let lastBarEvent = [].concat(barEvents).pop();
+		if (lastBarEvent) {
 			if (direction === directions.column) {
 				return (
 					<div className={"section two"} style={{
 						position: "absolute",
 						overflow: "auto",
-						top: resizeBarData.cappedResizeBarTopBorderPosition + resizeBarData.resizeBarHeight,
+						top: lastBarEvent.cappedResizeBarTopBorderPosition + lastBarEvent.resizeBarHeight,
 						left: 0,
 						right: 0,
-						bottom: 0
+						bottom: 0,
+						background: "yellow"
 					}}>
-						{JSON.stringify(resizeBarData, null, 4)}
+						{JSON.stringify(lastBarEvent, null, 4)}
 					</div>
 				)
 			} else if (direction === directions.row) {
@@ -269,9 +355,10 @@ function UIContainer() {
 						top: 0,
 						bottom: 0,
 						right: 0,
-						left: resizeBarData.cappedResizeBarLeftBorderPosition + resizeBarData.resizeBarWidth,
+						left: lastBarEvent.cappedResizeBarLeftBorderPosition + lastBarEvent.resizeBarWidth,
+						background: "yellow"
 					}}>
-						{JSON.stringify(resizeBarData, null, 4)}
+						{JSON.stringify(lastBarEvent, null, 4)}
 					</div>
 				)
 			}
@@ -281,12 +368,14 @@ function UIContainer() {
 		}
 	}
 
-
 	return (
 		<div
 			className={UIContainer.name}
 			style={{
-				flexDirection: direction
+				display: "flex",
+				flexDirection: direction,
+				flex: 1,
+				position: "relative"
 			}}
 			ref={uiContainer}
 			onDrop={(e) => {
@@ -300,12 +389,16 @@ function UIContainer() {
 				directions={directions}
 				direction={direction}
 				uiContainer={uiContainer}
-				resizeBarStyle={resizeBarStyle}
-				onResizeBarStyleChange={(data) => {
-					setResizeBarStyle(data);
-				}}
-				onResize={(data) => {
-					setResizeBarData(data);
+				resizeBarStyle={(()=>{
+					let lastBarEvent = [].concat(barEvents).pop();
+					if(lastBarEvent){
+						return lastBarEvent.resizeBarStyle;
+					} else {
+						return {};
+					}
+				})()}
+				onBarEvent={(lastBarEvent)=>{
+					setBarEvents(barEvents.concat([lastBarEvent]));
 				}}
 			/>
 			{getSection1()}
