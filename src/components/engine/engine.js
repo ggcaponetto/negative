@@ -235,97 +235,87 @@ function UIContainer() {
 	const [direction, setDirection] = useState(directions.column);
 	const uiContainer = useRef(null);
 	const resizeBar = useRef(null);
+	const [resizeBarInfos, setResizeBarInfos] = useState([]);
 
 	const getSection1 = () => {
 		if (direction === directions.column) {
 			return (
 				<div
 					className={"section one"}
-					style={{
-						position: "absolute",
-						overflow: "auto",
-						top: 0,
-						left: 0,
-						right: 0,
-						bottom: uiContainer.current.clientHeight - getPositionInfo().cappedResizeBarTopBorderPosition,
-						background: "aquamarine"
-					}}
+					style={{}}
 				>
 					{/*{JSON.stringify(lastBarEvent, null, 4)}*/}
-					<button
-						onClick={() => {
-							let newDirection = direction === directions.column ? directions.row : directions.column;
-							setDirection(newDirection);
-						}}>
-						direction swap
-					</button>
+					{/*{getFlipDirectionButton()}*/}
 				</div>
 			)
 		} else if (direction === directions.row) {
 			return (
 				<div
 					className={"section one"}
-					style={{
-						position: "absolute",
-						overflow: "auto",
-						top: 0,
-						bottom: 0,
-						left: 0,
-						right: uiContainer.current.clientWidth - getPositionInfo().cappedResizeBarLeftBorderPosition,
-						background: "aquamarine"
-					}}
+					style={{}}
 				>
 					{/*{JSON.stringify(lastBarEvent, null, 4)}*/}
-					<button
-						onClick={() => {
-							let newDirection = direction === directions.column ? directions.row : directions.column;
-							setDirection(newDirection);
-						}}>
-						direction swap
-					</button>
+					{/*{getFlipDirectionButton()}*/}
 				</div>
 			)
 		}
 	};
-
 	const getSection2 = () => {
 		if (direction === directions.column) {
 			return (
-				<div className={"section two"} style={{
-					position: "absolute",
-					overflow: "auto",
-					top: getPositionInfo().cappedResizeBarTopBorderPosition + getPositionInfo().resizeBarHeight,
-					left: 0,
-					right: 0,
-					bottom: 0,
-					background: "yellow"
-				}}>
+				<div className={"section two"} style={{}}>
 					{/*{JSON.stringify(lastBarEvent, null, 4)}*/}
 				</div>
 			)
 		} else if (direction === directions.row) {
 			return (
-				<div className={"section two"} style={{
-					position: "absolute",
-					overflow: "auto",
-					top: 0,
-					bottom: 0,
-					right: 0,
-					left: getPositionInfo().cappedResizeBarLeftBorderPosition + getPositionInfo().resizeBarWidth,
-					background: "yellow"
-				}}>
+				<div className={"section two"} style={{}}>
 					{/*{JSON.stringify(lastBarEvent, null, 4)}*/}
 				</div>
 			)
 		}
 	};
+	const getFlipDirectionButton = () => {
+		return (
+			<button
+				onClick={() => {
+					let newDirection = direction === directions.column ? directions.row : directions.column;
+					setDirection(newDirection);
+				}}>
+				direction swap
+			</button>
+		)
+	};
+	const getResizeBarStyle = () => {
+		let defaultStyle = {
+			position: "absolute",
+			cursor: "move",
+			width: "fit-content",
+			top: 0,
+			left: 0,
+		};
 
+		let lastResizeInfo = [].concat(resizeBarInfos).pop();
+
+		if(!lastResizeInfo){
+			// return the default position
+			return defaultStyle;
+		} else {
+			return  {
+				position: "absolute",
+				cursor: "move",
+				width: "fit-content",
+				top: lastResizeInfo.cappedResizeBarTopBorderPosition,
+				left: lastResizeInfo.cappedResizeBarLeftBorderPosition,
+			}
+		}
+	};
 	const getResizeBar = () => {
 		return (
 			<div
-				className={UIContainer.name}
+				className={"resizebar"}
 				draggable={true}
-				style={()}
+				style={getResizeBarStyle()}
 				ref={resizeBar}
 				onDragStart={(e) => {
 					e.persist();
@@ -348,6 +338,24 @@ function UIContainer() {
 					console.debug(`${UIContainer.name} onDragEnd`, e);
 					handleDrag(e);
 				}}
+				onDragExit={(e) => {
+					e.persist();
+					// e.preventDefault();
+					console.debug(`${UIContainer.name} onDragExit`, e);
+					handleDrag(e);
+				}}
+				onDragLeave={(e) => {
+					e.persist();
+					// e.preventDefault();
+					console.debug(`${UIContainer.name} onDragLeave`, e);
+					handleDrag(e);
+				}}
+				onDrop={(e) => {
+					e.persist();
+					// e.preventDefault();
+					console.debug(`${UIContainer.name} onDrop`, e);
+					handleDrag(e);
+				}}
 				onTouchStart={(e) => {
 					e.persist();
 					// e.preventDefault();
@@ -365,93 +373,67 @@ function UIContainer() {
 			</div>
 		);
 	};
-
 	const handleDrag = (e) => {
 		let isTouch = e.touches;
-		let resizeBarTopBorderPosition = e.clientY;
-		let resizeBarLeftBorderPosition = e.clientX;
+
+		let resizeBarTopBorderPosition = null;
+		let resizeBarLeftBorderPosition = null;
 		if (isTouch && e.touches[0]) {
 			resizeBarTopBorderPosition = e.touches[0].clientY;
 			resizeBarLeftBorderPosition = e.touches[0].clientX;
 		} else {
 			resizeBarTopBorderPosition = e.clientY;
+			resizeBarLeftBorderPosition = e.clientX;
 		}
+
 		let containerHeight = uiContainer.current.clientHeight;
 		let containerWidth = uiContainer.current.clientWidth;
+
 		let resizeBarHeight = resizeBar.current.clientHeight;
 		let resizeBarWidth = resizeBar.current.clientWidth;
 
-		// Cap the resizeBarTopBorderPosition.
-		// On mouse release the clientY could be negative or higher than te container height
-		let cappedResizeBarTopBorderPosition = Math.min(Math.max(resizeBarTopBorderPosition, 0), containerHeight - resizeBarHeight);
-		let cappedResizeBarLeftBorderPosition = Math.min(Math.max(resizeBarLeftBorderPosition, 0), containerWidth - resizeBarWidth);
 
-		console.debug(`${UIContainer.name} handleDrag`, {
-			e,
-			resizeBarTopBorderPosition,
-			cappedResizeBarLeftBorderPosition,
-			resizeBarHeight,
-			resizeBarWidth,
-			containerHeight,
-			uiContainer: uiContainer
-		});
+		let cappedResizeBarTopBorderPosition = resizeBarTopBorderPosition;
+		let cappedResizeBarLeftBorderPosition = resizeBarLeftBorderPosition;
 
-		let resizeBarStyle = null;
-		if (direction === directions.column) {
-			let columnStyle = {
-				position: "absolute",
-				display: "flex",
-				flex: 1,
-				cursor: "move",
-				background: "grey",
-				alignItems: "center",
-				justifyContent: "center",
-				top: cappedResizeBarTopBorderPosition,
-				left: 0,
-				right: 0
-			};
-			resizeBarStyle = columnStyle;
-		} else if (direction === directions.row) {
-			let rowStyle = {
-				position: "absolute",
-				display: "flex",
-				flex: 1,
-				cursor: "move",
-				background: "grey",
-				alignItems: "center",
-				justifyContent: "center",
-				top: 0,
-				bottom: 0,
-				left: cappedResizeBarLeftBorderPosition,
-			};
-			resizeBarStyle = rowStyle;
+		// Detect when the user moves outside of the window or container
+		let lastResizeInfo = [].concat(resizeBarInfos).pop();
+		let isOverflowEvent = false;
+		if(resizeBarTopBorderPosition < 0){
+			// top overflow
+			console.debug(`${UIContainer.name} handleDrag - overflow top`);
+			isOverflowEvent = true;
+			cappedResizeBarTopBorderPosition = lastResizeInfo.cappedResizeBarTopBorderPosition;
+			// cappedResizeBarLeftBorderPosition = lastResizeInfo.cappedResizeBarLeftBorderPosition;
 		}
-		setBarEvents(barEvents.concat([
-			{
-				cappedResizeBarTopBorderPosition,
-				cappedResizeBarLeftBorderPosition,
-				resizeBarHeight,
-				resizeBarWidth,
-				resizeBarStyle
-			}
-		]))
-	};
-
-	const getPositionInfo = () => {
-		let resizeBarTopBorderPosition = resizeBar.current.style.top;
-		let resizeBarLeftBorderPosition = resizeBar.current.style.left;
-		let containerHeight = uiContainer.current.clientHeight;
-		let containerWidth = uiContainer.current.clientWidth;
-		let resizeBarHeight = resizeBar.current.clientHeight;
-		let resizeBarWidth = resizeBar.current.clientWidth;
-
-		// Cap the resizeBarTopBorderPosition.
-		// On mouse release the clientY could be negative or higher than te container height
-		let cappedResizeBarTopBorderPosition = Math.min(Math.max(resizeBarTopBorderPosition, 0), containerHeight - resizeBarHeight);
-		let cappedResizeBarLeftBorderPosition = Math.min(Math.max(resizeBarLeftBorderPosition, 0), containerWidth - resizeBarWidth);
-		return {
-			cappedResizeBarLeftBorderPosition, cappedResizeBarTopBorderPosition, resizeBarHeight, resizeBarWidth, containerWidth, containerHeight
+		if(resizeBarLeftBorderPosition < 0){
+			// left overflow
+			console.debug(`${UIContainer.name} handleDrag - overflow left`);
+			isOverflowEvent = true;
+			// cappedResizeBarTopBorderPosition = lastResizeInfo.cappedResizeBarTopBorderPosition;
+			cappedResizeBarLeftBorderPosition = lastResizeInfo.cappedResizeBarLeftBorderPosition;
 		}
+		if(Math.max(resizeBarLeftBorderPosition, 0) > containerWidth - resizeBarWidth){
+			// right overflow
+			console.debug(`${UIContainer.name} handleDrag - overflow right`);
+			isOverflowEvent = true;
+			// cappedResizeBarTopBorderPosition = lastResizeInfo.cappedResizeBarTopBorderPosition;
+			cappedResizeBarLeftBorderPosition = lastResizeInfo.cappedResizeBarLeftBorderPosition;
+		}
+		if(Math.max(resizeBarTopBorderPosition, 0) > containerHeight - resizeBarHeight){
+			// bottom overlfow
+			console.debug(`${UIContainer.name} handleDrag - overflow bottom`);
+			isOverflowEvent = true;
+			cappedResizeBarTopBorderPosition = lastResizeInfo.cappedResizeBarTopBorderPosition;
+			// cappedResizeBarLeftBorderPosition = lastResizeInfo.cappedResizeBarLeftBorderPosition;
+		}
+
+		setResizeBarInfos(resizeBarInfos.concat([{
+			e, cappedResizeBarTopBorderPosition, cappedResizeBarLeftBorderPosition, containerHeight, containerWidth, resizeBarHeight, resizeBarWidth, isOverflowEvent
+		}]));
+
+		console.debug(`${UIContainer.name} handleDrag - all`, resizeBarInfos);
+
 	};
 
 	useEffect(() => {
@@ -469,14 +451,12 @@ function UIContainer() {
 			}}
 			ref={uiContainer}
 			onDrop={(e) => {
-				e.preventDefault();
 			}}
 			onDragOver={(e) => {
-				e.preventDefault();
 			}}
 		>
-			{getSection1()}
-			{getSection2()}
+			{/*{getSection1()}
+			{getSection2()}*/}
 			{getResizeBar()}
 		</div>
 	);
