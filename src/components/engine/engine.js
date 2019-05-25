@@ -231,11 +231,14 @@ export const EngineContext = React.createContext(defaultEngineContext);
 }*/
 
 function UIContainer() {
+	const hookClassName = "UIContainer";
 	const directions = {column: "column", row: "row"};
 	const [direction, setDirection] = useState(directions.column);
 	const uiContainer = useRef(null);
 	const resizeBar = useRef(null);
-	const [resizeBarInfos, setResizeBarInfos] = useState([]);
+	//const [resizeBarInfos, setResizeBarInfos] = useState([]);
+
+	const [gestures, setGestures] = useState([]);
 
 	const getSection1 = () => {
 		if (direction === directions.column) {
@@ -295,9 +298,10 @@ function UIContainer() {
 			left: 0,
 		};
 
-		let lastResizeInfo = [].concat(resizeBarInfos).pop();
+		let lastGesture = [].concat(gestures).pop();
+		let lastGestureEvent = [].concat(lastGesture).pop();
 
-		if(!lastResizeInfo){
+		if(!lastGestureEvent){
 			// return the default position
 			return defaultStyle;
 		} else {
@@ -305,8 +309,8 @@ function UIContainer() {
 				position: "absolute",
 				cursor: "move",
 				width: "fit-content",
-				top: lastResizeInfo.cappedResizeBarTopBorderPosition,
-				left: lastResizeInfo.cappedResizeBarLeftBorderPosition,
+				top: lastGestureEvent.cappedResizeBarTopBorderPosition,
+				left: lastGestureEvent.cappedResizeBarLeftBorderPosition,
 			}
 		}
 	};
@@ -317,55 +321,61 @@ function UIContainer() {
 				draggable={true}
 				style={getResizeBarStyle()}
 				ref={resizeBar}
+				onDrag={(e) => {
+					e.persist();
+					// e.preventDefault();
+					// console.debug(`${hookClassName} onDrag`, e);
+					handleDrag(e);
+				}}
 				onDragStart={(e) => {
 					e.persist();
 					// e.preventDefault();
-					console.debug(`${UIContainer.name} onDragStart`, e);
+					// console.debug(`${hookClassName} onDragStart`, e);
 					let ghostElement = document.createElement("div");
 					ghostElement.style.display = "none"; /* or visibility: hidden, or any of the above */
 					e.dataTransfer.setDragImage(ghostElement, 0, 0);
 					handleDrag(e);
 				}}
-				onDrag={(e) => {
-					e.persist();
-					// e.preventDefault();
-					console.debug(`${UIContainer.name} onDrag`, e);
-					handleDrag(e);
-				}}
 				onDragEnd={(e) => {
 					e.persist();
 					// e.preventDefault();
-					console.debug(`${UIContainer.name} onDragEnd`, e);
+					// console.debug(`${hookClassName} onDragEnd`, e);
 					handleDrag(e);
 				}}
 				onDragExit={(e) => {
 					e.persist();
 					// e.preventDefault();
-					console.debug(`${UIContainer.name} onDragExit`, e);
+					// console.debug(`${hookClassName} onDragExit`, e);
 					handleDrag(e);
 				}}
 				onDragLeave={(e) => {
 					e.persist();
 					// e.preventDefault();
-					console.debug(`${UIContainer.name} onDragLeave`, e);
+					// console.debug(`${hookClassName} onDragLeave`, e);
 					handleDrag(e);
 				}}
 				onDrop={(e) => {
 					e.persist();
 					// e.preventDefault();
-					console.debug(`${UIContainer.name} onDrop`, e);
+					// console.debug(`${hookClassName} onDrop`, e);
 					handleDrag(e);
 				}}
 				onTouchStart={(e) => {
 					e.persist();
 					// e.preventDefault();
-					console.debug(`${UIContainer.name} onTouchStart`, e);
+					// console.debug(`${hookClassName} onTouchStart`, e);
 					handleDrag(e);
 				}}
 				onTouchMove={(e) => {
 					e.persist();
 					// e.preventDefault();
-					console.debug(`${UIContainer.name} onTouchMove`, e);
+					// console.debug(`${hookClassName} onTouchMove`, e);
+					handleDrag(e);
+				}}
+				onTouchEnd={(e) => {
+					e.persist();
+					// e.preventDefault();
+					// console.debug(`${hookClassName} onTouchEnd`, e);
 					handleDrag(e);
 				}}
 			>
@@ -397,52 +407,110 @@ function UIContainer() {
 		let cappedResizeBarLeftBorderPosition = resizeBarLeftBorderPosition;
 
 		// Detect when the user moves outside of the window or container
-		let lastResizeInfo = [].concat(resizeBarInfos).pop();
+		let lastGesture = [].concat(gestures).pop();
+		let lastGestureEvent = [].concat(lastGesture).pop();
 		let isOverflowEvent = false;
 		if(resizeBarTopBorderPosition < 0){
 			// top overflow
-			console.debug(`${UIContainer.name} handleDrag - overflow top`);
+			console.debug(`${hookClassName} handleDrag - overflow top`);
 			isOverflowEvent = true;
-			cappedResizeBarTopBorderPosition = lastResizeInfo.cappedResizeBarTopBorderPosition;
-			// cappedResizeBarLeftBorderPosition = lastResizeInfo.cappedResizeBarLeftBorderPosition;
+			// cappedResizeBarTopBorderPosition = lastGestureEvent.cappedResizeBarTopBorderPosition;
+			// cappedResizeBarLeftBorderPosition = lastGestureEvent.cappedResizeBarLeftBorderPosition;
 		}
 		if(resizeBarLeftBorderPosition < 0){
 			// left overflow
-			console.debug(`${UIContainer.name} handleDrag - overflow left`);
+			console.debug(`${hookClassName} handleDrag - overflow left`);
 			isOverflowEvent = true;
-			// cappedResizeBarTopBorderPosition = lastResizeInfo.cappedResizeBarTopBorderPosition;
-			cappedResizeBarLeftBorderPosition = lastResizeInfo.cappedResizeBarLeftBorderPosition;
+			// cappedResizeBarTopBorderPosition = lastGestureEvent.cappedResizeBarTopBorderPosition;
+			// cappedResizeBarLeftBorderPosition = lastGestureEvent.cappedResizeBarLeftBorderPosition;
 		}
 		if(Math.max(resizeBarLeftBorderPosition, 0) > containerWidth - resizeBarWidth){
 			// right overflow
-			console.debug(`${UIContainer.name} handleDrag - overflow right`);
+			console.debug(`${hookClassName} handleDrag - overflow right`);
 			isOverflowEvent = true;
-			// cappedResizeBarTopBorderPosition = lastResizeInfo.cappedResizeBarTopBorderPosition;
-			cappedResizeBarLeftBorderPosition = lastResizeInfo.cappedResizeBarLeftBorderPosition;
+			// cappedResizeBarTopBorderPosition = lastGestureEvent.cappedResizeBarTopBorderPosition;
+			// cappedResizeBarLeftBorderPosition = lastGestureEvent.cappedResizeBarLeftBorderPosition;
 		}
 		if(Math.max(resizeBarTopBorderPosition, 0) > containerHeight - resizeBarHeight){
 			// bottom overlfow
-			console.debug(`${UIContainer.name} handleDrag - overflow bottom`);
+			console.debug(`${hookClassName} handleDrag - overflow bottom`);
 			isOverflowEvent = true;
-			cappedResizeBarTopBorderPosition = lastResizeInfo.cappedResizeBarTopBorderPosition;
-			// cappedResizeBarLeftBorderPosition = lastResizeInfo.cappedResizeBarLeftBorderPosition;
+			// cappedResizeBarTopBorderPosition = lastGestureEvent.cappedResizeBarTopBorderPosition;
+			// cappedResizeBarLeftBorderPosition = lastGestureEvent.cappedResizeBarLeftBorderPosition;
 		}
 
-		setResizeBarInfos(resizeBarInfos.concat([{
-			e, cappedResizeBarTopBorderPosition, cappedResizeBarLeftBorderPosition, containerHeight, containerWidth, resizeBarHeight, resizeBarWidth, isOverflowEvent
-		}]));
+		let gestureEvent = {
+			e,
+			cappedResizeBarTopBorderPosition,
+			cappedResizeBarLeftBorderPosition,
+			containerHeight,
+			containerWidth,
+			resizeBarHeight,
+			resizeBarWidth,
+			isOverflowEvent
+		};
 
-		console.debug(`${UIContainer.name} handleDrag - all`, resizeBarInfos);
+		const addEventToCurrentGesture = () => {
+			let newGestures = gestures.concat([]);
+			let lastGestureEvents = newGestures.pop();
+			lastGestureEvents.push(gestureEvent);
+			newGestures.push(lastGestureEvents);
+			setGestures(newGestures);
+			// console.debug(`${hookClassName} - event - addEventToCurrentGesture`, {gestureEvent, gestures});
+		};
+		const addEventToNewGesture = () => {
+			let newGestures = gestures.concat([]);
+			newGestures.push([
+				gestureEvent
+			]);
+			setGestures(newGestures);
+		};
 
+		if(e.type === "drag"){
+			console.debug(`${hookClassName} - event - drag`, {gestureEvent, gestures});
+			addEventToCurrentGesture();
+		}
+		if(e.type === "dragstart"){
+			console.debug(`${hookClassName} - event - dragstart`, {gestureEvent, gestures});
+			addEventToNewGesture()
+		}
+		if(e.type === "dragend"){
+			console.debug(`${hookClassName} - event - dragend`, {gestureEvent, gestures});
+			addEventToCurrentGesture();
+		}
+		if(e.type === "dragexit"){
+			console.debug(`${hookClassName} - event - dragexit`, {gestureEvent, gestures});
+			addEventToCurrentGesture();
+		}
+		if(e.type === "dragleave"){
+			console.debug(`${hookClassName} - event - dragleave`, {gestureEvent, gestures});
+			addEventToCurrentGesture();
+		}
+		if(e.type === "drop"){
+			console.debug(`${hookClassName} - event - dragleave`, {gestureEvent, gestures});
+			addEventToCurrentGesture();
+		}
+		if(e.type === "touchstart"){
+			console.debug(`${hookClassName} - event - touchstart`, {gestureEvent, gestures});
+			addEventToNewGesture();
+		}
+		if(e.type === "touchmove"){
+			console.debug(`${hookClassName} - event - touchmove`, {gestureEvent, gestures});
+			addEventToCurrentGesture();
+		}
+		if(e.type === "touchend"){
+			console.debug(`${hookClassName} - event - touchend`, {gestureEvent, gestures});
+			addEventToCurrentGesture();
+		}
 	};
 
 	useEffect(() => {
-		console.debug(`${UIContainer.name} useEffect`);
+		console.debug(`${hookClassName} useEffect`);
 	}, []);
 
 	return (
 		<div
-			className={UIContainer.name}
+			className={hookClassName}
 			style={{
 				display: "flex",
 				flexDirection: direction,
