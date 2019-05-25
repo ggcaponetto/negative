@@ -388,12 +388,21 @@ function UIContainer() {
 
 		let resizeBarTopBorderPosition = null;
 		let resizeBarLeftBorderPosition = null;
-		if (isTouch && e.touches[0]) {
+		if (
+			isTouch &&
+			e.touches.length > 0 &&
+			e.touches[0]
+		) {
 			resizeBarTopBorderPosition = e.touches[0].clientY;
 			resizeBarLeftBorderPosition = e.touches[0].clientX;
-		} else {
+		} else if(
+			typeof e.clientX !== "undefined" &&
+			typeof e.clientY !== "undefined"
+		){
 			resizeBarTopBorderPosition = e.clientY;
 			resizeBarLeftBorderPosition = e.clientX;
+		} else {
+			return;
 		}
 
 		let containerHeight = uiContainer.current.clientHeight;
@@ -414,29 +423,29 @@ function UIContainer() {
 			// top overflow
 			console.debug(`${hookClassName} handleDrag - overflow top`);
 			isOverflowEvent = true;
-			// cappedResizeBarTopBorderPosition = lastGestureEvent.cappedResizeBarTopBorderPosition;
-			// cappedResizeBarLeftBorderPosition = lastGestureEvent.cappedResizeBarLeftBorderPosition;
+			cappedResizeBarTopBorderPosition = lastGestureEvent.cappedResizeBarTopBorderPosition;
+			cappedResizeBarLeftBorderPosition = lastGestureEvent.cappedResizeBarLeftBorderPosition;
 		}
 		if(resizeBarLeftBorderPosition < 0){
 			// left overflow
 			console.debug(`${hookClassName} handleDrag - overflow left`);
 			isOverflowEvent = true;
-			// cappedResizeBarTopBorderPosition = lastGestureEvent.cappedResizeBarTopBorderPosition;
-			// cappedResizeBarLeftBorderPosition = lastGestureEvent.cappedResizeBarLeftBorderPosition;
+			cappedResizeBarTopBorderPosition = lastGestureEvent.cappedResizeBarTopBorderPosition;
+			cappedResizeBarLeftBorderPosition = lastGestureEvent.cappedResizeBarLeftBorderPosition;
 		}
 		if(Math.max(resizeBarLeftBorderPosition, 0) > containerWidth - resizeBarWidth){
 			// right overflow
 			console.debug(`${hookClassName} handleDrag - overflow right`);
 			isOverflowEvent = true;
-			// cappedResizeBarTopBorderPosition = lastGestureEvent.cappedResizeBarTopBorderPosition;
-			// cappedResizeBarLeftBorderPosition = lastGestureEvent.cappedResizeBarLeftBorderPosition;
+			cappedResizeBarTopBorderPosition = lastGestureEvent.cappedResizeBarTopBorderPosition;
+			cappedResizeBarLeftBorderPosition = lastGestureEvent.cappedResizeBarLeftBorderPosition;
 		}
 		if(Math.max(resizeBarTopBorderPosition, 0) > containerHeight - resizeBarHeight){
 			// bottom overlfow
 			console.debug(`${hookClassName} handleDrag - overflow bottom`);
 			isOverflowEvent = true;
-			// cappedResizeBarTopBorderPosition = lastGestureEvent.cappedResizeBarTopBorderPosition;
-			// cappedResizeBarLeftBorderPosition = lastGestureEvent.cappedResizeBarLeftBorderPosition;
+			cappedResizeBarTopBorderPosition = lastGestureEvent.cappedResizeBarTopBorderPosition;
+			cappedResizeBarLeftBorderPosition = lastGestureEvent.cappedResizeBarLeftBorderPosition;
 		}
 
 		let gestureEvent = {
@@ -449,6 +458,7 @@ function UIContainer() {
 			resizeBarWidth,
 			isOverflowEvent
 		};
+
 
 		const addEventToCurrentGesture = () => {
 			let newGestures = gestures.concat([]);

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c26eeacb-3389-4248-9da0-6b05ac3e9834" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/engine/engine.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/engine/engine.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
@@ -21,7 +20,7 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.58559257">
+    <splitter split-orientation="horizontal" split-proportion="0.57784665">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
@@ -65,13 +64,19 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="39">
-                  <caret line="488" column="27" selection-start-line="488" selection-start-column="27" selection-end-line="488" selection-end-column="27" />
+                <state relative-caret-position="96">
+                  <caret line="461" lean-forward="true" selection-start-line="461" selection-end-line="461" />
                   <folding>
                     <element signature="e#229#6846#0" />
                     <element signature="e#7144#7596#0" />
                     <element signature="e#7625#7971#0" />
                     <element signature="e#8011#8229#0" />
+                    <element signature="e#8796#10376#0" />
+                    <element signature="e#11329#11626#0" />
+                    <element signature="e#11664#11963#0" />
+                    <element signature="e#12044#12345#0" />
+                    <element signature="e#12427#12730#0" />
+                    <element signature="e#12928#13090#0" />
                     <element signature="n#!!block;n#Version#0" />
                     <element signature="e#13644#13649#0" />
                     <element signature="e#13669#13845#0" />
@@ -257,12 +262,12 @@
       <workItem from="1558609831893" duration="8640000" />
       <workItem from="1558628428894" duration="8267000" />
       <workItem from="1558680399193" duration="576000" />
-      <workItem from="1558778924048" duration="3837000" />
+      <workItem from="1558778924048" duration="5958000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86449000" />
+    <option name="totallyTimeSpent" value="88570000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1549" height="846" extended-state="6" />
@@ -276,14 +281,14 @@
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.18759018" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.43578643" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.25685427" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.25685427" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -367,13 +372,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="39">
-          <caret line="488" column="27" selection-start-line="488" selection-start-column="27" selection-end-line="488" selection-end-column="27" />
+        <state relative-caret-position="96">
+          <caret line="461" lean-forward="true" selection-start-line="461" selection-end-line="461" />
           <folding>
             <element signature="e#229#6846#0" />
             <element signature="e#7144#7596#0" />
             <element signature="e#7625#7971#0" />
             <element signature="e#8011#8229#0" />
+            <element signature="e#8796#10376#0" />
+            <element signature="e#11329#11626#0" />
+            <element signature="e#11664#11963#0" />
+            <element signature="e#12044#12345#0" />
+            <element signature="e#12427#12730#0" />
+            <element signature="e#12928#13090#0" />
             <element signature="n#!!block;n#Version#0" />
             <element signature="e#13644#13649#0" />
             <element signature="e#13669#13845#0" />
