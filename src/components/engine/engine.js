@@ -4,15 +4,15 @@ import './engine.css';
 const defaultEngineContext = {version: "0.0.1"};
 export const EngineContext = React.createContext(defaultEngineContext);
 
-function UIContainer() {
+function UIContainer(props) {
 	const hookClassName = "UIContainer";
-	const directions = {column: "column", row: "row"};
-	const [direction, setDirection] = useState(directions.column);
 	const uiContainer = useRef(null);
 	const resizeBar = useRef(null);
-	//const [resizeBarInfos, setResizeBarInfos] = useState([]);
-
 	const [gestures, setGestures] = useState([]);
+
+	useEffect(() => {
+		console.debug(`${hookClassName} useEffect`, {props});
+	}, []);
 
 	const getSection1 = () => {
 		let lastGesture = [].concat(gestures).pop();
@@ -33,12 +33,17 @@ function UIContainer() {
 				}
 			}
 		};
+		let subComponent = null;
+		if(props.sections && props.sections.one){
+			subComponent = props.sections.one;
+		}
 		return (
 			<div
 				className={"section one"}
 				style={getSectionStyle()}
 			>
 				{/*{JSON.stringify(lastBarEvent, null, 4)}*/}
+				{/*{subComponent}*/}
 			</div>
 		)
 	};
@@ -110,6 +115,7 @@ function UIContainer() {
 					left: 0,
 					top: lastGestureEvent.cappedResizeBarTopBorderPosition + lastGestureEvent.resizeBarHeight,
 					bottom: 0,
+					display: "flex"
 				}
 			} else {
 				return {
@@ -117,25 +123,23 @@ function UIContainer() {
 				}
 			}
 		};
+		let subComponent = null;
+		if(props.sections && props.sections.one){
+			subComponent = props.sections.one;
+		}
 		return (
 			<div
 				className={"section four"}
 				style={getSectionStyle()}
 			>
-				{/*{JSON.stringify(lastBarEvent, null, 4)}*/}
+				{subComponent}
 			</div>
 		)
 	};
-	const getFlipDirectionButton = () => {
-		return (
-			<button
-				onClick={() => {
-					let newDirection = direction === directions.column ? directions.row : directions.column;
-					setDirection(newDirection);
-				}}>
-				direction swap
-			</button>
-		)
+	const getSection = (section) => {
+		if(section === "top"){
+
+		}
 	};
 	const getResizeBarStyle = () => {
 		let defaultStyle = {
@@ -366,18 +370,15 @@ function UIContainer() {
 		}
 	};
 
-	useEffect(() => {
-		console.debug(`${hookClassName} useEffect`);
-	}, []);
-
 	return (
 		<div
 			className={hookClassName}
 			style={{
 				display: "flex",
-				flexDirection: direction,
+				flexDirection: "column",
 				flex: 1,
-				position: "relative"
+				position: "relative",
+				background: "white"
 			}}
 			ref={uiContainer}
 			onDrop={(e) => {
@@ -385,10 +386,10 @@ function UIContainer() {
 			onDragOver={(e) => {
 			}}
 		>
-			{getSection1()}
-			{getSection2()}
-			{getSection3()}
-			{getSection4()}
+			{getSection("top")}
+			{getSection("left")}
+			{getSection("bottom")}
+			{getSection("right")}
 			{getResizeBar()}
 		</div>
 	);
@@ -422,7 +423,21 @@ function Engine() {
 			</div>
 			<Version/>
 			*/}
-			<UIContainer/>
+			<div style={{
+				position: "absolute",
+				top: 0,
+				left: 0,
+				right: 0,
+				bottom:0,
+				display: "flex"
+			}}>
+				<UIContainer
+					sections={{
+						one: (<UIContainer style={{position: "absolute", top: 0, left: 0, right: 0, bottom:0, display: "flex"}}/>)
+					}}
+				/>
+			</div>
+
 		</EngineContext.Provider>
 	);
 }
