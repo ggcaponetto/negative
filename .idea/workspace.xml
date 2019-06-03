@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c26eeacb-3389-4248-9da0-6b05ac3e9834" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/engine/engine.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/engine/engine.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/engine/engine.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/engine/engine.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
@@ -57,14 +60,18 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/engine/engine.css">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="22" lean-forward="true" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2023">
-              <caret line="119" column="109" selection-start-line="119" selection-start-column="109" selection-end-line="119" selection-end-column="109" />
+            <state relative-caret-position="153">
+              <caret line="15" column="34" selection-end-line="139" />
               <folding>
                 <element signature="e#0#82#0" expanded="true" />
               </folding>
@@ -157,6 +164,24 @@
             <path>
               <item name="negative" type="b2602c69:ProjectViewProjectNode" />
               <item name="negative" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="negative" type="b2602c69:ProjectViewProjectNode" />
+              <item name="negative" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+              <item name="split.js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="negative" type="b2602c69:ProjectViewProjectNode" />
+              <item name="negative" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+              <item name="split.js" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="negative" type="b2602c69:ProjectViewProjectNode" />
+              <item name="negative" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -241,18 +266,19 @@
       <workItem from="1558878622066" duration="4401000" />
       <workItem from="1558938243179" duration="14000" />
       <workItem from="1558989072438" duration="4358000" />
-      <workItem from="1559595398649" duration="4588000" />
+      <workItem from="1559595398649" duration="7536000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="104080000" />
+    <option name="totallyTimeSpent" value="107028000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1549" height="846" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.708" visible="true" weight="0.17773306" />
-      <window_info id="Structure" order="1" sideWeight="0.292" side_tool="true" visible="true" weight="0.17773306" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7092199" visible="true" weight="0.17773306" />
+      <window_info id="Structure" order="1" sideWeight="0.29078013" side_tool="true" visible="true" weight="0.17773306" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
       <window_info id="Learn" order="4" />
@@ -260,13 +286,13 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.20634921" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.27849928" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.27849928" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3102453" />
+      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.18614718" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -319,7 +345,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/components/engine/engine.js</url>
-          <line>13</line>
+          <line>35</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
@@ -358,12 +384,16 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/engine/engine.css">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="22" lean-forward="true" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2023">
-          <caret line="119" column="109" selection-start-line="119" selection-start-column="109" selection-end-line="119" selection-end-column="109" />
+        <state relative-caret-position="153">
+          <caret line="15" column="34" selection-end-line="139" />
           <folding>
             <element signature="e#0#82#0" expanded="true" />
           </folding>

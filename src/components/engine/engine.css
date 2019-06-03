@@ -1,0 +1,20 @@
+.flex {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    height: 100%;
+
+}
+.gutter.gutter-horizontal {
+    cursor: ew-resize;
+}
+.gutter.gutter-vertical {
+    cursor: ns-resize;
+}
+
+#one{
+    background: brown;
+}
+#two{
+    background: #6a6aa5;
+}

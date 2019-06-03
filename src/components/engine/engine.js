@@ -1,12 +1,34 @@
 import React, {useState, useEffect, useContext, useRef, useCallback} from 'react';
 import './engine.css';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import Split from 'split.js/dist/split.js'
 
 const defaultEngineContext = {
 	version: "0.0.1",
 	broadcastChannelName: "negative"
 };
 export const EngineContext = React.createContext(defaultEngineContext);
+
+function Component(props){
+	useEffect(() =>{
+		Split(['#one', '#two'], {
+			/*direction: 'vertical',*/
+			direction: 'horizontal',
+			elementStyle: (dimension, size, gutterSize) => ({
+				'flex-basis': `calc(${size}% - ${gutterSize}px)`,
+			}),
+			gutterStyle: (dimension, gutterSize) => ({
+				'flex-basis':  `${gutterSize}px`,
+			}),
+		})
+	}, []);
+	return (
+		<div className="flex">
+			<div id="one"></div>
+			<div id="two"></div>
+		</div>
+	);
+}
 
 function Tab(props) {
 	const [broadcastChannel, setBroadcastChannel] = useState(null);
@@ -19,21 +41,7 @@ function Tab(props) {
 		}
 	}, []);
 	return (
-		<div
-		>
-			{JSON.stringify(props)}
-			<button onClick={() => {
-				broadcastChannel.postMessage(`Engine sent message`);
-			}}>
-				send message
-			</button>
-			<button onClick={() => {
-				props.tabConfig.data.testFunction();
-			}}>
-				test function
-			</button>
-			<div>{props.match.params.id}</div>
-		</div>
+		<Component {...props}/>
 	);
 }
 
