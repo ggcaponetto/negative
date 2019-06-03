@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext, useRef, useCallback} from 'react';
 import './engine.css';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 
 const defaultEngineContext = {
 	version: "0.0.1",
@@ -9,15 +9,30 @@ const defaultEngineContext = {
 export const EngineContext = React.createContext(defaultEngineContext);
 
 function Tab(props) {
+	const [broadcastChannel, setBroadcastChannel] = useState(null);
 	useEffect(() => {
-		let bc = new BroadcastChannel(props.broadcastChannelName);
-		bc.postMessage(`Engine sent message to ${null}`);
-		bc.onmessage = function (e) { console.debug(`Engine got message from ${null}`, e); }
+		console.debug(`useEffect`, props);
+		let broadcastChannel = new BroadcastChannel(props.broadcastChannelName);
+		setBroadcastChannel(broadcastChannel);
+		broadcastChannel.onmessage = function (e) {
+			console.debug(`Engine got message`, e);
+		}
 	}, []);
 	return (
 		<div
 		>
 			{JSON.stringify(props)}
+			<button onClick={() => {
+				broadcastChannel.postMessage(`Engine sent message`);
+			}}>
+				send message
+			</button>
+			<button onClick={() => {
+				props.tabConfig.data.testFunction();
+			}}>
+				test function
+			</button>
+			<div>{props.match.params.id}</div>
 		</div>
 	);
 }
@@ -28,16 +43,34 @@ function Engine() {
 		let defautlConfig = {
 			tabs: [
 				{
+					id: "1",
 					name: "Tab1",
-					broadcastChannelName: defaultEngineContext.broadcastChannelName
+					broadcastChannelName: defaultEngineContext.broadcastChannelName,
+					data: {
+						testFunction: () => {
+							alert("hello world 1")
+						}
+					}
 				},
 				{
+					id: "2",
 					name: "Tab2",
-					broadcastChannelName: defaultEngineContext.broadcastChannelName
+					broadcastChannelName: defaultEngineContext.broadcastChannelName,
+					data: {
+						testFunction: () => {
+							alert("hello world 2")
+						}
+					}
 				},
 				{
+					id: "3",
 					name: "Tab3",
-					broadcastChannelName: defaultEngineContext.broadcastChannelName
+					broadcastChannelName: defaultEngineContext.broadcastChannelName,
+					data: {
+						testFunction: () => {
+							alert("hello world 3")
+						}
+					}
 				},
 			]
 		};
@@ -55,7 +88,7 @@ function Engine() {
 			}}>
 				<button onClick={() => {
 					uiConfig.tabs.forEach((tabConfig) => {
-						let tab = window.open(`/tab`, `_blank`);
+						let tab = window.open(`/tab/${tabConfig.id}`, `_blank`);
 					});
 				}}>load ui
 				</button>
@@ -71,8 +104,25 @@ function Engine() {
 			<Version/>
 			*/}
 			<Router>
-				<Route path="/engine" component={getEngine} />
-				<Route path="/tab" component={Tab} />
+				<Route
+					path="/engine"
+					render={(props) => {
+						console.debug(`props`, props);
+						return getEngine();
+					}}
+				/>
+				<Route
+					path="/tab/:id"
+					render={(props) => {
+						let tabId = props.match.params.id;
+						console.debug(`props`, {tabId, props});
+						if(uiConfig){
+							return <Tab {...props} tabConfig={uiConfig.tabs.filter(tab => tab.id === tabId)[0]}/>;
+						} else {
+							return null;
+						}
+					}}
+				/>
 			</Router>
 		</EngineContext.Provider>
 	);
