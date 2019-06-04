@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c26eeacb-3389-4248-9da0-6b05ac3e9834" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/tab/tab.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/tab/tab.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/engine/engine.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/engine/engine.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/engine/engine.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/engine/engine.js" afterDir="false" />
     </list>
@@ -61,20 +61,41 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/engine/engine.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="22" lean-forward="true" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+            <state relative-caret-position="136">
+              <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-36">
+              <caret line="78" column="22" lean-forward="true" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#82#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/tab/tab.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="20" lean-forward="true" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#82#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
+        <entry file="file://$PROJECT_DIR$/src/components/tab/tab.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="15" column="34" selection-end-line="139" />
-              <folding>
-                <element signature="e#0#82#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="204">
+              <caret line="12" selection-end-line="19" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -91,7 +112,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>setEngineComponent</find>
       <find>getFlex</find>
       <find>getParentHeight</find>
       <find>flex</find>
@@ -121,6 +141,7 @@
       <find>section</find>
       <find>one</find>
       <find>UIContainer</find>
+      <find>Component</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -131,8 +152,10 @@
       <list>
         <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/App.css" />
-        <option value="$PROJECT_DIR$/src/components/engine/engine.css" />
         <option value="$PROJECT_DIR$/src/components/engine/engine.js" />
+        <option value="$PROJECT_DIR$/src/components/tab/tab.js" />
+        <option value="$PROJECT_DIR$/src/components/engine/engine.css" />
+        <option value="$PROJECT_DIR$/src/components/tab/tab.css" />
       </list>
     </option>
   </component>
@@ -154,30 +177,13 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="negative" type="b2602c69:ProjectViewProjectNode" />
               <item name="negative" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="negative" type="b2602c69:ProjectViewProjectNode" />
-              <item name="negative" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="negative" type="b2602c69:ProjectViewProjectNode" />
-              <item name="negative" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="split.js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="negative" type="b2602c69:ProjectViewProjectNode" />
-              <item name="negative" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="split.js" type="462c0819:PsiDirectoryNode" />
-              <item name="dist" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="negative" type="b2602c69:ProjectViewProjectNode" />
@@ -190,12 +196,18 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="negative" type="b2602c69:ProjectViewProjectNode" />
+              <item name="negative" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="engine" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -223,7 +235,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.debug">
+  <component name="RunManager" selected="npm.start">
     <configuration name="debug" type="JavascriptDebugType" engineId="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" uri="http://localhost:3000/engine" useFirstLineBreakpoints="true">
       <method v="2" />
     </configuration>
@@ -266,33 +278,35 @@
       <workItem from="1558878622066" duration="4401000" />
       <workItem from="1558938243179" duration="14000" />
       <workItem from="1558989072438" duration="4358000" />
-      <workItem from="1559595398649" duration="7536000" />
+      <workItem from="1559595398649" duration="7570000" />
+      <workItem from="1559629074437" duration="33000" />
+      <workItem from="1559670067483" duration="3637000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="107028000" />
+    <option name="totallyTimeSpent" value="110732000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1549" height="846" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7092199" visible="true" weight="0.17773306" />
-      <window_info id="Structure" order="1" sideWeight="0.29078013" side_tool="true" visible="true" weight="0.17773306" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.70526314" visible="true" weight="0.20992622" />
+      <window_info id="Structure" order="1" sideWeight="0.29473683" side_tool="true" visible="true" weight="0.20992622" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
       <window_info id="Learn" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.20634921" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.17748918" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.27849928" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.18614718" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.18614718" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -340,18 +354,6 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/components/engine/engine.js</url>
-          <line>35</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/logo.svg">
       <provider selected="true" editor-type-id="images" />
@@ -383,20 +385,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/engine/engine.css">
+    <entry file="file://$PROJECT_DIR$/src/components/tab/tab.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="22" lean-forward="true" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+        <state relative-caret-position="85">
+          <caret line="5" column="20" lean-forward="true" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#82#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="15" column="34" selection-end-line="139" />
+        <state relative-caret-position="-36">
+          <caret line="78" column="22" lean-forward="true" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="22" />
           <folding>
             <element signature="e#0#82#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/engine/engine.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/tab/tab.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" selection-end-line="19" selection-end-column="1" />
         </state>
       </provider>
     </entry>

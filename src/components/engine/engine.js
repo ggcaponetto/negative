@@ -1,49 +1,13 @@
 import React, {useState, useEffect, useContext, useRef, useCallback} from 'react';
 import './engine.css';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
-import Split from 'split.js/dist/split.js'
+import {Tab} from "../tab/tab";
 
 const defaultEngineContext = {
 	version: "0.0.1",
 	broadcastChannelName: "negative"
 };
 export const EngineContext = React.createContext(defaultEngineContext);
-
-function Component(props){
-	useEffect(() =>{
-		Split(['#one', '#two'], {
-			/*direction: 'vertical',*/
-			direction: 'horizontal',
-			elementStyle: (dimension, size, gutterSize) => ({
-				'flex-basis': `calc(${size}% - ${gutterSize}px)`,
-			}),
-			gutterStyle: (dimension, gutterSize) => ({
-				'flex-basis':  `${gutterSize}px`,
-			}),
-		})
-	}, []);
-	return (
-		<div className="flex">
-			<div id="one"></div>
-			<div id="two"></div>
-		</div>
-	);
-}
-
-function Tab(props) {
-	const [broadcastChannel, setBroadcastChannel] = useState(null);
-	useEffect(() => {
-		console.debug(`useEffect`, props);
-		let broadcastChannel = new BroadcastChannel(props.broadcastChannelName);
-		setBroadcastChannel(broadcastChannel);
-		broadcastChannel.onmessage = function (e) {
-			console.debug(`Engine got message`, e);
-		}
-	}, []);
-	return (
-		<Component {...props}/>
-	);
-}
 
 function Engine() {
 	const [uiConfig, setUiConfig] = useState(null);
@@ -55,6 +19,7 @@ function Engine() {
 					name: "Tab1",
 					broadcastChannelName: defaultEngineContext.broadcastChannelName,
 					data: {
+						direction: "vertical",
 						testFunction: () => {
 							alert("hello world 1")
 						}
@@ -65,6 +30,7 @@ function Engine() {
 					name: "Tab2",
 					broadcastChannelName: defaultEngineContext.broadcastChannelName,
 					data: {
+						direction: "horizontal",
 						testFunction: () => {
 							alert("hello world 2")
 						}
@@ -75,6 +41,7 @@ function Engine() {
 					name: "Tab3",
 					broadcastChannelName: defaultEngineContext.broadcastChannelName,
 					data: {
+						direction: "horizontal",
 						testFunction: () => {
 							alert("hello world 3")
 						}

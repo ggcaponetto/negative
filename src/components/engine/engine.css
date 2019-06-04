@@ -1,20 +1,10 @@
-.flex {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    height: 100%;
-
-}
-.gutter.gutter-horizontal {
-    cursor: ew-resize;
-}
-.gutter.gutter-vertical {
-    cursor: ns-resize;
-}
-
-#one{
-    background: brown;
-}
-#two{
-    background: #6a6aa5;
+:root {
+    --bg-dark: #000000;
+    --bg-light: #383838;
+    --text-regular: white;
+    --text-highlight: #a593a2;
+    --color-primary-dark: #ffbc6d;
+    --color-primary-light: #ffca64;
+    --color-secondary-dark: #6df8ff;
+    --color-secondary-light: #6a6aa5;
 }
