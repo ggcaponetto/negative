@@ -20,11 +20,21 @@ function Engine() {
 					broadcastChannelName: defaultEngineContext.broadcastChannelName,
 					data: {
 						direction: "vertical",
+						split1: {
+							data: {
+								direction: "vertical",
+							}
+						},
+						split2: {
+							data: {
+								direction: "vertical",
+							}
+						},
 						testFunction: () => {
 							alert("hello world 1")
 						}
 					}
-				},
+				}/*,
 				{
 					id: "2",
 					name: "Tab2",
@@ -46,7 +56,7 @@ function Engine() {
 							alert("hello world 3")
 						}
 					}
-				},
+				},*/
 			]
 		};
 		setUiConfig(defautlConfig);

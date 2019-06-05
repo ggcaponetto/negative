@@ -5,7 +5,25 @@ import "./tab.css";
 export function Component(props){
 	useEffect(() =>{
 		Split(['.split-1', '.split-2'], {
-			direction: props.direction,
+			direction: props.tabConfig.data.direction,
+			elementStyle: (dimension, size, gutterSize) => ({
+				'flex-basis': `calc(${size}% - ${gutterSize}px)`,
+			}),
+			gutterStyle: (dimension, gutterSize) => ({
+				'flex-basis':  `${gutterSize}px`,
+			}),
+		});
+		Split(['.split-1-1', '.split-1-2'], {
+			direction: props.tabConfig.data.direction,
+			elementStyle: (dimension, size, gutterSize) => ({
+				'flex-basis': `calc(${size}% - ${gutterSize}px)`,
+			}),
+			gutterStyle: (dimension, gutterSize) => ({
+				'flex-basis':  `${gutterSize}px`,
+			}),
+		});
+		Split(['.split-2-1', '.split-2-2'], {
+			direction: props.tabConfig.data.direction,
 			elementStyle: (dimension, size, gutterSize) => ({
 				'flex-basis': `calc(${size}% - ${gutterSize}px)`,
 			}),
@@ -14,19 +32,37 @@ export function Component(props){
 			}),
 		})
 	}, []);
-	let getFlexDirection = () => {
-		if(props.direction === "vertical"){
+	let getMainFlexDirection = () => {
+		if(props.tabConfig.data.direction === "vertical"){
 			return "column";
-		} else if (props.direction === "horizontal"){
+		} else if (props.tabConfig.data.direction === "horizontal"){
 			return "row";
 		} else {
-			throw new Error(`direction "${props.direction}" is not supported`);
+			throw new Error(`direction "${props.tabConfig.data.direction }" is not supported`);
 		}
 	};
 	return (
-		<div className={`flex ${props.direction}`} style={{flexDirection: getFlexDirection()}}>
-			<div className={"split-1"}></div>
-			<div className={"split-2"}></div>
+		<div className={`flex ${props.direction}`} style={{flexDirection: getMainFlexDirection()}}>
+			<div className={"split-1"}>
+				<div className={`flex ${props.direction}`} style={{flexDirection: getMainFlexDirection()}}>
+					<div className={"split-1-1"}>
+
+					</div>
+					<div className={"split-1-2"}>
+
+					</div>
+				</div>
+			</div>
+			<div className={"split-2"}>
+				<div className={`flex ${props.direction}`} style={{flexDirection: getMainFlexDirection()}}>
+					<div className={"split-2-1"}>
+
+					</div>
+					<div className={"split-2-2"}>
+
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }
@@ -42,6 +78,6 @@ export function Tab(props) {
 		}
 	}, []);
 	return (
-		<Component {...props} direction={props.tabConfig.data.direction}/>
+		<Component {...props} tabConfig={props.tabConfig}/>
 	);
 }
