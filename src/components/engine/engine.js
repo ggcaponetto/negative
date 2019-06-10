@@ -31,6 +31,15 @@ function Menu(props) {
 
 		props.updateMasterTree(masterTree);
 	};
+	const onComponentSelect = (e) => {
+		e.persist();
+		console.debug(`onComponentSelect`, {e});
+		let value = e.target.value;
+		props.setDisplayedComponentId(value);
+	};
+	const onDirectionFlip = () => {
+		props.flipDirection();
+	};
 	const onChildAdd = () => {
 		let masterTree = {...props.masterTree};
 
@@ -55,13 +64,17 @@ function Menu(props) {
 
 		props.updateMasterTree(masterTree);
 	};
+
 	const getMenuItems = () => {
 		if (isOpen) {
 			return (
 				<div className={"menu-items"}>
 					<button onClick={onChildAdd}>add child</button>
 					<button onClick={onChildrenRemove}>remove children</button>
-					<button onClick={props.flipDirection}>change to {props.getOppositeDirection()}</button>
+					<button onClick={onDirectionFlip}>change to {props.getOppositeDirection()}</button>
+					<select onChange={onComponentSelect}>
+						{props.componentIdArray.map((componentId, i) => <option key={i} value={componentId}>{componentId}</option>)}
+					</select>
 				</div>
 			)
 		} else {
@@ -84,7 +97,8 @@ function Menu(props) {
 function Component(props) {
 	const directions = {row: "row", column: "column"};
 	const splitPrefix = "component-split";
-	const [direction, setDirection] = useState(directions.row);
+	const [direction, setDirection] = useState(directions.column);
+	const [displayedComponentId, setDisplayedComponentId] = useState(null);
 
 	const getFlexDirection = () => {
 		if (direction === directions.row) {
@@ -94,6 +108,13 @@ function Component(props) {
 		}
 	};
 
+	useEffect(() => {
+		console.debug(`useEffect - component setup`);
+		// determine the css ids of the direct children
+		let subComponentTree = props.subComponentTree;
+		let idArray = subComponentTree.children.map((subComponent, i) => `#${splitPrefix}-${subComponent.id}`);
+		setDisplayedComponentId("container");
+	}, []);
 	useEffect(() => {
 		console.debug(`useEffect - split.js setup`);
 		// determine the css ids of the direct children
@@ -108,7 +129,8 @@ function Component(props) {
 					'flex-basis': `calc(${size}% - ${gutterSize}px)`,
 				}),
 				gutterStyle: (dimension, gutterSize) => ({
-					'flex-basis': `${gutterSize}px`,
+					'flex-basis': `${5}px`,
+					/*'height': `${gutterSize}px`,*/
 				}),
 			})
 		}
@@ -155,6 +177,8 @@ function Component(props) {
 							masterTree={props.masterTree}
 							subComponentTree={subComponentTree}
 							updateMasterTree={props.updateMasterTree}
+
+							componentIdArray={props.componentIdArray}
 						/>
 					))
 				});
@@ -162,23 +186,48 @@ function Component(props) {
 		});
 		return subComponents;
 	};
+	const getComponent = () => {
+		if(displayedComponentId === "container"){
+			return null;
+		} else {
+			return <div>{props.subComponentTree.id}, {displayedComponentId}</div>
+		}
+	};
 
 	return (
 		<div
 			id={`component-split-${props.subComponentTree.id}`}
 			className={`component ${props.subComponentTree.id}`}
 			style={{
-				flexDirection: getFlexDirection()
-			}}>
-			<Menu {...props} flipDirection={flipDirection} getOppositeDirection={getOppositeDirection}/>
-			{getSubCompnents()}
-			{props.subComponentTree.id}
+				flexDirection: "column"
+			}}
+		>
+			<Menu
+				{...props}
+				flipDirection={flipDirection}
+				getOppositeDirection={getOppositeDirection}
+				setDisplayedComponentId={(componentId) => {
+					setDisplayedComponentId(componentId)
+				}}
+			/>
+			<div
+				className={`subcomponents`}
+				style={{
+					flexDirection: getFlexDirection()
+				}}
+			>
+				{getSubCompnents()}
+			</div>
+			{getComponent()}
 		</div>
 	)
 }
 
 function Engine() {
 	const [masterTree, setMasterTree] = useState(null);
+	const [componentIdArray, setComponentIdArray] = useState([
+		"container", "threejs", "console", "filetree"
+	]);
 
 	useEffect(() => {
 		let defaultTree = {
@@ -220,12 +269,15 @@ function Engine() {
 				bottom: 0
 			}}>
 				<Component
+
 					masterTree={masterTree}
 					subComponentTree={masterTree}
 					updateMasterTree={(newTree) => {
 						console.debug(`updateMasterTree`, {newTree, masterTree});
 						setMasterTree(newTree);
 					}}
+
+					componentIdArray={componentIdArray}
 				/>
 			</div>
 		);

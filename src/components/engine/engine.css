@@ -8,8 +8,16 @@
     --color-secondary-dark: #6df8ff;
     --color-secondary-light: #6a6aa5;
 }
-
+.menu{
+    /*background-color: var(--bg-light);*/
+}
 .component {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    width: 100%;
+}
+.subcomponents {
     display: flex;
     flex: 1;
     height: 100%;
@@ -20,6 +28,7 @@
 }
 .gutter.gutter-horizontal {
     cursor: ew-resize;
+    width: 5px;
 }
 .gutter.gutter-vertical {
     cursor: ns-resize;
