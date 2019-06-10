@@ -9,8 +9,44 @@ const defaultEngineContext = {
 export const EngineContext = React.createContext(defaultEngineContext);
 
 function Menu(props) {
+	const directions = {row: "row", column: "column"};
 	const [isOpen, setIsOpen] = useState(false);
-	const onClick = (e) => {
+	const [direction, setDirection] = useState(directions.row);
+	const flipDirection = () => {
+		if(direction === directions.row){
+			setDirection(directions.column);
+		} else {
+			setDirection(directions.row);
+		}
+	};
+	const getOppositeDirection = () => {
+		if(direction === directions.row){
+			return directions.column;
+		} else {
+			return directions.row;
+		}
+	};
+	const onChildrenRemove = () => {
+		let masterTree = {...props.masterTree};
+
+		let walkTree = (subComponentTree) => {
+			if(subComponentTree.id === props.subComponentTree.id){
+				subComponentTree.children = []
+			} else {
+				Object.keys(subComponentTree).forEach((key) => {
+					if(key === "children"){
+						subComponentTree[key].forEach((subComponentTree) => {
+							walkTree(subComponentTree)
+						});
+					}
+				});
+			}
+		};
+		walkTree(masterTree);
+
+		props.updateMasterTree(masterTree);
+	};
+	const onChildAdd = () => {
 		let masterTree = {...props.masterTree};
 
 		let walkTree = (subComponentTree) => {
@@ -38,7 +74,9 @@ function Menu(props) {
 		if (isOpen) {
 			return (
 				<div className={"menu-items"}>
-					<button onClick={onClick}>add child</button>
+					<button onClick={onChildAdd}>add child</button>
+					<button onClick={onChildrenRemove}>remove children</button>
+					<button onClick={flipDirection}>change to {getOppositeDirection()}</button>
 				</div>
 			)
 		} else {
@@ -94,7 +132,7 @@ function Component(props) {
 		<div style={componentStyle}>
 			<Menu {...props}/>
 			{getSubCompnents()}
-			{props.subComponentTree.id}, {props.subComponentTree.data}
+			{props.subComponentTree.id}
 		</div>
 	)
 }
@@ -104,21 +142,21 @@ function Engine() {
 
 	useEffect(() => {
 		let defaultTree = {
-			id: "1",
-			data: "component-1",
+			id: "0",
+			data: "component-0",
 			children: [
 				{
-					id: "1-1",
-					data: "component-1-1",
+					id: "0-0",
+					data: "component-0-0",
 					children: []
 				},
 				{
-					id: "1-2",
-					data: "component-1-2",
+					id: "0-1",
+					data: "component-0-1",
 					children: [
 						{
-							id: "1-2-1",
-							data: "component-1-2-1",
+							id: "0-1-0",
+							data: "component-0-1-0",
 							children: []
 						},
 					]
