@@ -8,3 +8,19 @@
     --color-secondary-dark: #6df8ff;
     --color-secondary-light: #6a6aa5;
 }
+
+.component {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    width: 100%;
+}
+.gutter{
+    background-color: var(--bg-light);
+}
+.gutter.gutter-horizontal {
+    cursor: ew-resize;
+}
+.gutter.gutter-vertical {
+    cursor: ns-resize;
+}

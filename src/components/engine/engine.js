@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext, useRef, useCallback} from 'react';
 import './engine.css';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import Split from "split.js";
 
 const defaultEngineContext = {
 	version: "0.0.1",
@@ -9,32 +10,16 @@ const defaultEngineContext = {
 export const EngineContext = React.createContext(defaultEngineContext);
 
 function Menu(props) {
-	const directions = {row: "row", column: "column"};
 	const [isOpen, setIsOpen] = useState(false);
-	const [direction, setDirection] = useState(directions.row);
-	const flipDirection = () => {
-		if(direction === directions.row){
-			setDirection(directions.column);
-		} else {
-			setDirection(directions.row);
-		}
-	};
-	const getOppositeDirection = () => {
-		if(direction === directions.row){
-			return directions.column;
-		} else {
-			return directions.row;
-		}
-	};
 	const onChildrenRemove = () => {
 		let masterTree = {...props.masterTree};
 
 		let walkTree = (subComponentTree) => {
-			if(subComponentTree.id === props.subComponentTree.id){
+			if (subComponentTree.id === props.subComponentTree.id) {
 				subComponentTree.children = []
 			} else {
 				Object.keys(subComponentTree).forEach((key) => {
-					if(key === "children"){
+					if (key === "children") {
 						subComponentTree[key].forEach((subComponentTree) => {
 							walkTree(subComponentTree)
 						});
@@ -50,7 +35,7 @@ function Menu(props) {
 		let masterTree = {...props.masterTree};
 
 		let walkTree = (subComponentTree) => {
-			if(subComponentTree.id === props.subComponentTree.id){
+			if (subComponentTree.id === props.subComponentTree.id) {
 				subComponentTree.children.push({
 					id: `${subComponentTree.id}-${subComponentTree.children.length}`,
 					data: `${subComponentTree.id}-${subComponentTree.children.length}`,
@@ -58,7 +43,7 @@ function Menu(props) {
 				})
 			} else {
 				Object.keys(subComponentTree).forEach((key) => {
-					if(key === "children"){
+					if (key === "children") {
 						subComponentTree[key].forEach((subComponentTree) => {
 							walkTree(subComponentTree)
 						});
@@ -76,7 +61,7 @@ function Menu(props) {
 				<div className={"menu-items"}>
 					<button onClick={onChildAdd}>add child</button>
 					<button onClick={onChildrenRemove}>remove children</button>
-					<button onClick={flipDirection}>change to {getOppositeDirection()}</button>
+					<button onClick={props.flipDirection}>change to {props.getOppositeDirection()}</button>
 				</div>
 			)
 		} else {
@@ -84,35 +69,85 @@ function Menu(props) {
 		}
 	};
 	return (
-		<div>
-			<div className={"menu"}>
-				<button onClick={() => {
-					setIsOpen(!isOpen)
-				}}>
-					menu
-				</button>
-				{getMenuItems()}
-			</div>
+		<div className={"menu"}>
+			<button onClick={() => {
+				setIsOpen(!isOpen)
+			}}>
+				menu
+			</button>
+			{getMenuItems()}
 		</div>
 	);
 }
 
 
 function Component(props) {
-	const [componentStyle, setCompoenntStyle] = useState({
-		position: "relative",
-		top: 0,
-		left: 0,
-		right: 0,
-		bottom: 0
-	});
+	const directions = {row: "row", column: "column"};
+	const splitPrefix = "component-split";
+	const [direction, setDirection] = useState(directions.row);
 
+	const getFlexDirection = () => {
+		if (direction === directions.row) {
+			return "row";
+		} else if (direction === directions.column) {
+			return "column";
+		}
+	};
+
+	useEffect(() => {
+		console.debug(`useEffect - split.js setup`);
+		// determine the css ids of the direct children
+		let subComponentTree = props.subComponentTree;
+		let idArray = subComponentTree.children.map((subComponent, i) => `#${splitPrefix}-${subComponent.id}`);
+		console.debug(`useEffect - split.js setup`, {idArray, subComponentTree});
+		let splitInstance = null;
+		if (idArray.length > 0) {
+			splitInstance = Split(idArray, {
+				direction: getGutterDirection(),
+				elementStyle: (dimension, size, gutterSize) => ({
+					'flex-basis': `calc(${size}% - ${gutterSize}px)`,
+				}),
+				gutterStyle: (dimension, gutterSize) => ({
+					'flex-basis': `${gutterSize}px`,
+				}),
+			})
+		}
+		return () => {
+			// cleanup
+			console.debug(`useEffect - split.js cleanup`, {idArray, subComponentTree, splitInstance});
+			if(splitInstance !== null){
+				splitInstance.destroy();
+			}
+		}
+	}, [props, direction]);
+
+	const flipDirection = () => {
+		if (direction === directions.row) {
+			setDirection(directions.column);
+		} else {
+			setDirection(directions.row);
+		}
+	};
+	const getOppositeDirection = () => {
+		if (direction === directions.row) {
+			return directions.column;
+		} else if (direction === directions.column) {
+			return directions.row;
+		}
+	};
+	const getGutterDirection = () => {
+		if (direction === directions.row) {
+			return "horizontal";
+		} else if (direction === directions.column) {
+			return "vertical";
+		}
+	};
 	const getSubCompnents = () => {
 		let subComponentTree = props.subComponentTree;
 		let subComponents = [];
 
 		Object.keys(subComponentTree).forEach((key) => {
-			if(key === "children"){
+			if (key === "children") {
 				subComponentTree[key].forEach((subComponentTree, i) => {
 					subComponents.push((
 						<Component
@@ -129,8 +164,13 @@ function Component(props) {
 	};
 
 	return (
-		<div style={componentStyle}>
-			<Menu {...props}/>
+		<div
+			id={`component-split-${props.subComponentTree.id}`}
+			className={`component ${props.subComponentTree.id}`}
+			style={{
+				flexDirection: getFlexDirection()
+			}}>
+			<Menu {...props} flipDirection={flipDirection} getOppositeDirection={getOppositeDirection}/>
 			{getSubCompnents()}
 			{props.subComponentTree.id}
 		</div>
@@ -170,7 +210,7 @@ function Engine() {
 		console.debug(`useEffect`, {masterTree});
 	}, [masterTree]);
 
-	if(masterTree !== null){
+	if (masterTree !== null) {
 		return (
 			<div style={{
 				position: "absolute",
