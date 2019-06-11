@@ -23,6 +23,12 @@
     height: 100%;
     width: 100%;
 }
+.selfcomponent{
+    display: flex;
+    flex: 1;
+    height: 100%;
+    width: 100%;
+}
 .gutter{
     background-color: var(--bg-light);
 }

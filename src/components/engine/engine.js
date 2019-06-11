@@ -65,6 +65,16 @@ function Menu(props) {
 		props.updateMasterTree(masterTree);
 	};
 
+	const getSelect = () => {
+		if(props.subComponentTree.children.length === 0){
+			return (
+				<select onChange={onComponentSelect}>
+					{props.componentIdArray.map((componentId, i) => <option key={i} value={componentId}>{componentId}</option>)}
+				</select>
+			)
+		}
+	};
+
 	const getMenuItems = () => {
 		if (isOpen) {
 			return (
@@ -72,9 +82,7 @@ function Menu(props) {
 					<button onClick={onChildAdd}>add child</button>
 					<button onClick={onChildrenRemove}>remove children</button>
 					<button onClick={onDirectionFlip}>change to {props.getOppositeDirection()}</button>
-					<select onChange={onComponentSelect}>
-						{props.componentIdArray.map((componentId, i) => <option key={i} value={componentId}>{componentId}</option>)}
-					</select>
+					{getSelect()}
 				</div>
 			)
 		} else {
@@ -165,6 +173,7 @@ function Component(props) {
 		}
 	};
 	const getSubCompnents = () => {
+
 		let subComponentTree = props.subComponentTree;
 		let subComponents = [];
 
@@ -184,13 +193,24 @@ function Component(props) {
 				});
 			}
 		});
-		return subComponents;
+		if(subComponents.length > 0){
+			return (
+				<div
+					className={`subcomponents`}
+					style={{
+						flexDirection: getFlexDirection()
+					}}
+				>
+					{subComponents}
+				</div>
+			);
+		}
 	};
 	const getComponent = () => {
 		if(displayedComponentId === "container"){
 			return null;
 		} else {
-			return <div>{props.subComponentTree.id}, {displayedComponentId}</div>
+			return <div className={"selfcomponent"}>{props.subComponentTree.id}, {displayedComponentId}</div>
 		}
 	};
 
@@ -210,14 +230,7 @@ function Component(props) {
 					setDisplayedComponentId(componentId)
 				}}
 			/>
-			<div
-				className={`subcomponents`}
-				style={{
-					flexDirection: getFlexDirection()
-				}}
-			>
-				{getSubCompnents()}
-			</div>
+			{getSubCompnents()}
 			{getComponent()}
 		</div>
 	)
