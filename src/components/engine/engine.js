@@ -64,7 +64,6 @@ function Menu(props) {
 
 		props.updateMasterTree(masterTree);
 	};
-
 	const getSelect = () => {
 		if(props.subComponentTree.children.length === 0){
 			return (
@@ -74,7 +73,6 @@ function Menu(props) {
 			)
 		}
 	};
-
 	const getMenuItems = () => {
 		if (isOpen) {
 			return (
@@ -188,6 +186,7 @@ function Component(props) {
 							updateMasterTree={props.updateMasterTree}
 
 							componentIdArray={props.componentIdArray}
+							isUiComposerOpen={props.isUiComposerOpen}
 						/>
 					))
 				});
@@ -213,6 +212,22 @@ function Component(props) {
 			return <div className={"selfcomponent"}>{props.subComponentTree.id}, {displayedComponentId}</div>
 		}
 	};
+	const getMenu = () => {
+		if(props.isUiComposerOpen){
+			return (
+				<Menu
+					{...props}
+					flipDirection={flipDirection}
+					getOppositeDirection={getOppositeDirection}
+					setDisplayedComponentId={(componentId) => {
+						setDisplayedComponentId(componentId)
+					}}
+				/>
+			);
+		} else {
+			return null;
+		}
+	};
 
 	return (
 		<div
@@ -222,14 +237,7 @@ function Component(props) {
 				flexDirection: "column"
 			}}
 		>
-			<Menu
-				{...props}
-				flipDirection={flipDirection}
-				getOppositeDirection={getOppositeDirection}
-				setDisplayedComponentId={(componentId) => {
-					setDisplayedComponentId(componentId)
-				}}
-			/>
+			{getMenu()}
 			{getSubCompnents()}
 			{getComponent()}
 		</div>
@@ -238,9 +246,35 @@ function Component(props) {
 
 function Engine() {
 	const [masterTree, setMasterTree] = useState(null);
+	const [isUiComposerOpen, setIsUiComposerOpen] = useState(null);
+	const isUiComposerOpenRef = useRef(false);
 	const [componentIdArray, setComponentIdArray] = useState([
 		"container", "threejs", "console", "filetree"
 	]);
+
+	useEffect(() => {
+		console.debug(`useEffect - ui composer`, {isUiComposerOpenRef});
+		let keydownListener = document.addEventListener('keydown', (event) => {
+			const keyName = event.key;
+			if (keyName === 'Control') {
+				// not alert when only Control key is pressed.
+				return;
+			}
+			if (event.ctrlKey) {
+				// Even though event.key is not 'Control' (i.e. 'a' is pressed),
+				// event.ctrlKey may be true if Ctrl key is pressed at the time.
+				if(keyName === "q"){
+					console.debug(`combination of ctrl + ${keyName} pressed.`, {isUiComposerOpenRef});
+					isUiComposerOpenRef.current = !isUiComposerOpenRef.current;
+					setIsUiComposerOpen(isUiComposerOpenRef.current);
+				}
+			}
+		}, false);
+		return () => {
+			// cleanup
+			window.removeEventListener("keydown", keydownListener);
+		}
+	}, []);
 
 	useEffect(() => {
 		let defaultTree = {
@@ -270,7 +304,7 @@ function Engine() {
 	}, []);
 	useEffect(() => {
 		console.debug(`useEffect`, {masterTree});
-	}, [masterTree]);
+	}, [masterTree, isUiComposerOpenRef.current]);
 
 	if (masterTree !== null) {
 		return (
@@ -291,6 +325,7 @@ function Engine() {
 					}}
 
 					componentIdArray={componentIdArray}
+					isUiComposerOpen={isUiComposerOpen}
 				/>
 			</div>
 		);
