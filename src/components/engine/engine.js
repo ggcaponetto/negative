@@ -31,6 +31,33 @@ function Menu(props) {
 
 		props.updateMasterTree(masterTree);
 	};
+	const onSelfRemove = () => {
+		let masterTree = {...props.masterTree};
+
+		let walkTree = (subComponentTree) => {
+
+			let target = subComponentTree.children.filter((subComponentNode) => {
+				return subComponentNode.id === props.subComponentTree.id
+			})[0];
+
+			if(target){
+				subComponentTree.children = subComponentTree.children.filter((subComponentNode) => {
+					return subComponentNode.id !== props.subComponentTree.id
+				})
+			} else {
+				Object.keys(subComponentTree).forEach((key) => {
+					if (key === "children") {
+						subComponentTree[key].forEach((subComponentTree) => {
+							walkTree(subComponentTree)
+						});
+					}
+				});
+			}
+		};
+		walkTree(masterTree);
+
+		props.updateMasterTree(masterTree);
+	};
 	const onComponentSelect = (e) => {
 		e.persist();
 		console.debug(`onComponentSelect`, {e});
@@ -78,6 +105,7 @@ function Menu(props) {
 			return (
 				<div className={"menu-items"}>
 					<button onClick={onChildAdd}>add child</button>
+					<button onClick={onSelfRemove}>remove self</button>
 					<button onClick={onChildrenRemove}>remove children</button>
 					<button onClick={onDirectionFlip}>change to {props.getOppositeDirection()}</button>
 					{getSelect()}
