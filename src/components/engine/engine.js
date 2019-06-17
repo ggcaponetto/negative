@@ -100,11 +100,16 @@ function Menu(props) {
 			)
 		}
 	};
+	const onTabAdd = () => {
+		let win = window.open(`${window.location.origin}/tab`, '_blank');
+		win.focus();
+	};
 	const getMenuItems = () => {
 		if (isOpen) {
 			return (
 				<div className={"menu-items"}>
 					<button onClick={onChildAdd}>add child</button>
+					<button onClick={onTabAdd}>add tab</button>
 					<button onClick={onSelfRemove}>remove self</button>
 					<button onClick={onChildrenRemove}>remove children</button>
 					<button onClick={onDirectionFlip}>change to {props.getOppositeDirection()}</button>
@@ -129,15 +134,12 @@ function Menu(props) {
 
 
 function Component(props) {
-	const directions = {row: "row", column: "column"};
 	const splitPrefix = "component-split";
-	const [direction, setDirection] = useState(directions.column);
 	const [displayedComponentId, setDisplayedComponentId] = useState(null);
-
 	const getFlexDirection = () => {
-		if (direction === directions.row) {
+		if (props.subComponentTree.direction === props.directions.row) {
 			return "row";
-		} else if (direction === directions.column) {
+		} else if (props.subComponentTree.direction === props.directions.column) {
 			return "column";
 		}
 	};
@@ -175,26 +177,42 @@ function Component(props) {
 				splitInstance.destroy();
 			}
 		}
-	}, [props, direction]);
+	}, [props]);
 
 	const flipDirection = () => {
-		if (direction === directions.row) {
-			setDirection(directions.column);
-		} else {
-			setDirection(directions.row);
-		}
+		let masterTree = {...props.masterTree};
+
+		let walkTree = (subComponentTree) => {
+			if (subComponentTree.id === props.subComponentTree.id) {
+				if (props.direction === props.directions.row) {
+					subComponentTree.direction = props.directions.column;
+				} else {
+					subComponentTree.direction = props.directions.row;
+				}
+			} else {
+				Object.keys(subComponentTree).forEach((key) => {
+					if (key === "children") {
+						subComponentTree[key].forEach((subComponentTree) => {
+							walkTree(subComponentTree)
+						});
+					}
+				});
+			}
+		};
+		walkTree(masterTree);
+		props.updateMasterTree(masterTree);
 	};
 	const getOppositeDirection = () => {
-		if (direction === directions.row) {
-			return directions.column;
-		} else if (direction === directions.column) {
-			return directions.row;
+		if (props.direction === props.directions.row) {
+			return props.directions.column;
+		} else if (props.direction === props.directions.column) {
+			return props.directions.row;
 		}
 	};
 	const getGutterDirection = () => {
-		if (direction === directions.row) {
+		if (props.direction === props.directions.row) {
 			return "horizontal";
-		} else if (direction === directions.column) {
+		} else if (props.direction === props.directions.column) {
 			return "vertical";
 		}
 	};
@@ -279,6 +297,33 @@ function Engine() {
 	const [componentIdArray, setComponentIdArray] = useState([
 		"container", "threejs", "console", "filetree"
 	]);
+	const directions = {row: "row", column: "column"};
+	const defaultTabTree = {
+		id: "0",
+		data: "component-0",
+		direction: directions.column,
+		children: [
+			{
+				id: "0-0",
+				data: "component-0-0",
+				direction: directions.column,
+				children: []
+			},
+			{
+				id: "0-1",
+				data: "component-0-1",
+				direction: directions.column,
+				children: [
+					{
+						id: "0-1-0",
+						data: "component-0-1-0",
+						direction: directions.column,
+						children: []
+					},
+				]
+			},
+		]
+	};
 
 	useEffect(() => {
 		console.debug(`useEffect - ui composer`, {isUiComposerOpenRef});
@@ -303,30 +348,8 @@ function Engine() {
 			window.removeEventListener("keydown", keydownListener);
 		}
 	}, []);
-
 	useEffect(() => {
-		let defaultTree = {
-			id: "0",
-			data: "component-0",
-			children: [
-				{
-					id: "0-0",
-					data: "component-0-0",
-					children: []
-				},
-				{
-					id: "0-1",
-					data: "component-0-1",
-					children: [
-						{
-							id: "0-1-0",
-							data: "component-0-1-0",
-							children: []
-						},
-					]
-				},
-			]
-		};
+		let defaultTree = defaultTabTree;
 		console.debug(`useEffect`, {defaultTree, masterTree});
 		setMasterTree(defaultTree);
 	}, []);
@@ -343,18 +366,25 @@ function Engine() {
 				right: 0,
 				bottom: 0
 			}}>
-				<Component
+				<Router>
+					<Route path="/tab" render={(props) => {
+						return (
+							<Component
+								{...props}
+								directions={directions}
+								masterTree={masterTree}
+								subComponentTree={masterTree}
+								updateMasterTree={(newTree) => {
+									console.debug(`updateMasterTree`, {newTree, masterTree});
+									setMasterTree(newTree);
+								}}
 
-					masterTree={masterTree}
-					subComponentTree={masterTree}
-					updateMasterTree={(newTree) => {
-						console.debug(`updateMasterTree`, {newTree, masterTree});
-						setMasterTree(newTree);
-					}}
-
-					componentIdArray={componentIdArray}
-					isUiComposerOpen={isUiComposerOpen}
-				/>
+								componentIdArray={componentIdArray}
+								isUiComposerOpen={isUiComposerOpen}
+							/>
+						)
+					}} />
+				</Router>
 			</div>
 		);
 	} else {

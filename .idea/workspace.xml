@@ -25,7 +25,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/engine/engine.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
+            <state relative-caret-position="382">
               <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
             </state>
           </provider>
@@ -34,12 +34,23 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="61" column="20" lean-forward="true" selection-start-line="61" selection-start-column="20" selection-end-line="61" selection-end-column="20" />
+            <state relative-caret-position="184">
+              <caret line="373" column="54" selection-start-line="373" selection-start-column="44" selection-end-line="373" selection-end-column="54" />
               <folding>
                 <element signature="e#0#82#0" expanded="true" />
-                <element signature="e#553#873#0" />
-                <element signature="e#1198#1840#0" />
+                <element signature="e#469#940#0" />
+                <element signature="e#970#1665#0" />
+                <element signature="e#1701#1833#0" />
+                <element signature="e#1866#1895#0" />
+                <element signature="e#1923#2565#0" />
+                <element signature="e#2592#2839#0" />
+                <element signature="e#2865#2872#0" />
+                <element signature="e#5663#6403#0" />
+                <element signature="e#6433#6613#0" />
+                <element signature="e#6638#6938#0" />
+                <element signature="e#7505#8293#0" />
+                <element signature="e#7646#8187#0" />
+                <element signature="e#8761#8809#0" />
               </folding>
             </state>
           </provider>
@@ -57,8 +68,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onChangeDirectionClick</find>
-      <find>getSection1</find>
       <find>setStyle</find>
       <find>resizeBarData</find>
       <find>handleDrag</find>
@@ -87,6 +96,8 @@
       <find>isUiComposerOpenRef</find>
       <find>ctrl</find>
       <find>subComponentTree</find>
+      <find>ontab</find>
+      <find>directions</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -111,9 +122,9 @@
     <servers />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-218" />
+    <option name="x" value="-220" />
     <option name="y" value="-20" />
-    <option name="width" value="1938" />
+    <option name="width" value="1940" />
     <option name="height" value="880" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -122,7 +133,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -152,6 +162,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -229,33 +240,35 @@
       <workItem from="1559670067483" duration="7671000" />
       <workItem from="1560103466643" duration="8038000" />
       <workItem from="1560196937061" duration="14585000" />
-      <workItem from="1560537212327" duration="914000" />
+      <workItem from="1560537212327" duration="956000" />
+      <workItem from="1560753050810" duration="33000" />
+      <workItem from="1560808035920" duration="3581000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="141093000" />
+    <option name="totallyTimeSpent" value="144749000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1549" height="846" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7003676" visible="true" weight="0.14218645" />
-      <window_info id="Structure" order="1" sideWeight="0.29963234" side_tool="true" visible="true" weight="0.14218645" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6951673" visible="true" weight="0.23809524" />
+      <window_info id="Structure" order="1" sideWeight="0.30483273" side_tool="true" visible="true" weight="0.23809524" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
       <window_info id="Learn" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.46608946" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.22366522" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.27849928" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.21500722" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.51370853" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -338,19 +351,30 @@
     <entry file="file://$PROJECT_DIR$/src/components/tab/tab.js" />
     <entry file="file://$PROJECT_DIR$/src/components/engine/engine.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
+        <state relative-caret-position="382">
           <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="61" column="20" lean-forward="true" selection-start-line="61" selection-start-column="20" selection-end-line="61" selection-end-column="20" />
+        <state relative-caret-position="184">
+          <caret line="373" column="54" selection-start-line="373" selection-start-column="44" selection-end-line="373" selection-end-column="54" />
           <folding>
             <element signature="e#0#82#0" expanded="true" />
-            <element signature="e#553#873#0" />
-            <element signature="e#1198#1840#0" />
+            <element signature="e#469#940#0" />
+            <element signature="e#970#1665#0" />
+            <element signature="e#1701#1833#0" />
+            <element signature="e#1866#1895#0" />
+            <element signature="e#1923#2565#0" />
+            <element signature="e#2592#2839#0" />
+            <element signature="e#2865#2872#0" />
+            <element signature="e#5663#6403#0" />
+            <element signature="e#6433#6613#0" />
+            <element signature="e#6638#6938#0" />
+            <element signature="e#7505#8293#0" />
+            <element signature="e#7646#8187#0" />
+            <element signature="e#8761#8809#0" />
           </folding>
         </state>
       </provider>
