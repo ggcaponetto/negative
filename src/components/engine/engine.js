@@ -136,6 +136,8 @@ function Menu(props) {
 function Component(props) {
 	const splitPrefix = "component-split";
 	const [displayedComponentId, setDisplayedComponentId] = useState(null);
+	const [isMouseOver, setIsMouseOver] = useState(false);
+
 	const getFlexDirection = () => {
 		console.debug(`getFlexDirection`, props);
 		if (props.subComponentTree.direction === props.directions.row) {
@@ -204,16 +206,16 @@ function Component(props) {
 		props.updateMasterTree(masterTree);
 	};
 	const getOppositeDirection = () => {
-		if (props.direction === props.directions.row) {
+		if (props.subComponentTree.direction === props.directions.row) {
 			return props.directions.column;
-		} else if (props.direction === props.directions.column) {
+		} else if (props.subComponentTree.direction === props.directions.column) {
 			return props.directions.row;
 		}
 	};
 	const getGutterDirection = () => {
-		if (props.direction === props.directions.row) {
+		if (props.subComponentTree.direction === props.directions.row) {
 			return "horizontal";
-		} else if (props.direction === props.directions.column) {
+		} else if (props.subComponentTree.direction === props.directions.column) {
 			return "vertical";
 		}
 	};
@@ -261,7 +263,7 @@ function Component(props) {
 		}
 	};
 	const getMenu = () => {
-		if(props.isUiComposerOpen){
+		if(props.isUiComposerOpen && isMouseOver){
 			return (
 				<Menu
 					{...props}
@@ -283,6 +285,12 @@ function Component(props) {
 			className={`component ${props.subComponentTree.id}`}
 			style={{
 				flexDirection: "column"
+			}}
+			onMouseEnter={() => {
+				setIsMouseOver(true);
+			}}
+			onMouseLeave={() => {
+				setIsMouseOver(false);
 			}}
 		>
 			{getMenu()}

@@ -9,7 +9,17 @@
     --color-secondary-light: #6a6aa5;
 }
 .menu{
-    /*background-color: var(--bg-light);*/
+    background-color: var(--bg-light);
+}
+.menu .menu-items{
+    display: flex;
+    flex-wrap: wrap;
+}
+.menu .menu-items button{
+    display: block;
+}
+.menu button{
+    display: block;
 }
 .component {
     display: flex;
