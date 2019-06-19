@@ -157,16 +157,23 @@ function Component(props) {
 	const splitPrefix = "component-split";
 	const [displayedComponentId, setDisplayedComponentId] = useState(null);
 	const [isMouseOver, setIsMouseOver] = useState(false);
-	const [broadCastChannel, setBroadCastChannel] = useState(false);
+	const [broadCastChannel, setBroadCastChannel] = useState(null);
 	const events = {
-		mounted: "mounted"
+		mounted: "mounted",
+		mouseOver: "mouseOver"
 	};
+	useEffect(()=>{
+		console.debug(`Component useEffect - broadcast channel - isMouseOver`, {props});
+		if(broadCastChannel){
+			broadCastChannel.postMessage(`${props.subComponentTree.id}, ${displayedComponentId}, ${events.mouseOver}`);
+		}
+	}, [isMouseOver]);
 
 	useEffect(()=>{
 		console.debug(`Component useEffect - broadcast channel initialization`, {props});
 		let bc = new BroadcastChannel('engine-broadcast-channel');
 		bc.onmessage = (ev) => {
-			console.debug(`Component useEffect - broadcast channel onmessage`, {ev});
+			console.debug(`Component useEffect - broadcast channel onmessage`, ev.data);
 		};
 		bc.postMessage(`${props.subComponentTree.id}, ${displayedComponentId}, ${events.mounted}`);
 		setBroadCastChannel(bc);
