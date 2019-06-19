@@ -177,7 +177,7 @@ function Component(props) {
 	}, []);
 
 	const getFlexDirection = () => {
-		console.debug(`getFlexDirection`, props);
+		console.debug(`Component getFlexDirection`, props);
 		if (props.subComponentTree.direction === props.directions.row) {
 			return "row";
 		} else if (props.subComponentTree.direction === props.directions.column) {
@@ -186,18 +186,18 @@ function Component(props) {
 	};
 
 	useEffect(() => {
-		console.debug(`useEffect - component setup`);
+		console.debug(`Component useEffect - component setup`);
 		// determine the css ids of the direct children
 		let subComponentTree = props.subComponentTree;
 		let idArray = subComponentTree.children.map((subComponent, i) => `#${splitPrefix}-${subComponent.id}`);
 		setDisplayedComponentId("container");
 	}, []);
 	useEffect(() => {
-		console.debug(`useEffect - split.js setup`);
+		console.debug(`Component useEffect - split.js setup`);
 		// determine the css ids of the direct children
 		let subComponentTree = props.subComponentTree;
 		let idArray = subComponentTree.children.map((subComponent, i) => `#${splitPrefix}-${subComponent.id}`);
-		console.debug(`useEffect - split.js setup`, {idArray, subComponentTree});
+		console.debug(`Component useEffect - split.js setup`, {idArray, subComponentTree});
 		let splitInstance = null;
 		if (idArray.length > 0) {
 			splitInstance = Split(idArray, {
@@ -213,7 +213,7 @@ function Component(props) {
 		}
 		return () => {
 			// cleanup
-			console.debug(`useEffect - split.js cleanup`, {idArray, subComponentTree, splitInstance});
+			console.debug(`Component useEffect - split.js cleanup`, {idArray, subComponentTree, splitInstance});
 			if(splitInstance !== null){
 				splitInstance.destroy();
 			}
@@ -401,11 +401,11 @@ function Engine() {
 		}
 	}, []);
 	useEffect(() => {
-		console.debug(`useEffect`, {defaultTabTree, masterTree});
+		console.debug(`Engine useEffect`, {defaultTabTree, masterTree});
 		setMasterTree(defaultTabTree);
 	}, []);
 	useEffect(() => {
-		console.debug(`useEffect`, {masterTree});
+		console.debug(`Engine useEffect`, {masterTree});
 	}, [masterTree, isUiComposerOpenRef.current]);
 
 	if (masterTree !== null) {
@@ -427,7 +427,7 @@ function Engine() {
 								masterTree={masterTree}
 								subComponentTree={masterTree}
 								updateMasterTree={(newTree) => {
-									console.debug(`updateMasterTree`, {newTree, masterTree});
+									console.debug(`Engine updateMasterTree`, {newTree, masterTree});
 									setMasterTree(newTree);
 								}}
 

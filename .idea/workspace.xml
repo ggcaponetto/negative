@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c26eeacb-3389-4248-9da0-6b05ac3e9834" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/engine/engine.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/engine/engine.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/engine/engine.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/engine/engine.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
@@ -37,18 +34,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="168" column="85" lean-forward="true" selection-end-line="455" />
+            <state relative-caret-position="49">
+              <caret line="54" column="31" selection-start-line="54" selection-start-column="31" selection-end-line="54" selection-end-column="31" />
               <folding>
                 <element signature="e#0#82#0" expanded="true" />
-                <element signature="n#!!block;n#Menu#0" />
                 <element signature="e#469#940#0" />
                 <element signature="e#970#1665#0" />
                 <element signature="e#1701#1833#0" />
+                <element signature="e#1866#1895#0" />
                 <element signature="e#1923#2565#0" />
                 <element signature="e#2592#2839#0" />
+                <element signature="n#!!block;n#Component#0" />
                 <element signature="e#8291#8712#0" />
                 <element signature="e#8732#9520#0" />
+                <element signature="e#9544#9641#0" />
+                <element signature="e#9665#9713#0" />
               </folding>
             </state>
           </provider>
@@ -66,7 +66,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>current</find>
       <find>resi</find>
       <find>getResizeBarStyle</find>
       <find>section</find>
@@ -96,6 +95,7 @@
       <find>flipDirection</find>
       <find>getOppositeDirection</find>
       <find>broad</find>
+      <find>console.debug</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -232,33 +232,33 @@
       <workItem from="1560753050810" duration="33000" />
       <workItem from="1560808035920" duration="3666000" />
       <workItem from="1560955827376" duration="1018000" />
-      <workItem from="1560970524250" duration="9477000" />
+      <workItem from="1560970524250" duration="10227000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="155329000" />
+    <option name="totallyTimeSpent" value="156079000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1549" height="846" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6923077" visible="true" weight="0.19382964" />
-      <window_info id="Structure" order="1" sideWeight="0.30769232" side_tool="true" visible="true" weight="0.19382964" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.692429" visible="true" weight="0.19382964" />
+      <window_info id="Structure" order="1" sideWeight="0.30757096" side_tool="true" visible="true" weight="0.19382964" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
       <window_info id="Learn" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.19336219" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.4227994" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.2776699" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.27994227" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.085137084" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -348,18 +348,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="168" column="85" lean-forward="true" selection-end-line="455" />
+        <state relative-caret-position="49">
+          <caret line="54" column="31" selection-start-line="54" selection-start-column="31" selection-end-line="54" selection-end-column="31" />
           <folding>
             <element signature="e#0#82#0" expanded="true" />
-            <element signature="n#!!block;n#Menu#0" />
             <element signature="e#469#940#0" />
             <element signature="e#970#1665#0" />
             <element signature="e#1701#1833#0" />
+            <element signature="e#1866#1895#0" />
             <element signature="e#1923#2565#0" />
             <element signature="e#2592#2839#0" />
+            <element signature="n#!!block;n#Component#0" />
             <element signature="e#8291#8712#0" />
             <element signature="e#8732#9520#0" />
+            <element signature="e#9544#9641#0" />
+            <element signature="e#9665#9713#0" />
           </folding>
         </state>
       </provider>
