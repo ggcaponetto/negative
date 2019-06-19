@@ -137,6 +137,7 @@ function Component(props) {
 	const splitPrefix = "component-split";
 	const [displayedComponentId, setDisplayedComponentId] = useState(null);
 	const getFlexDirection = () => {
+		console.debug(`getFlexDirection`, props);
 		if (props.subComponentTree.direction === props.directions.row) {
 			return "row";
 		} else if (props.subComponentTree.direction === props.directions.column) {
@@ -227,6 +228,7 @@ function Component(props) {
 					subComponents.push((
 						<Component
 							key={i}
+							directions={props.directions}
 							masterTree={props.masterTree}
 							subComponentTree={subComponentTree}
 							updateMasterTree={props.updateMasterTree}
@@ -349,9 +351,8 @@ function Engine() {
 		}
 	}, []);
 	useEffect(() => {
-		let defaultTree = defaultTabTree;
-		console.debug(`useEffect`, {defaultTree, masterTree});
-		setMasterTree(defaultTree);
+		console.debug(`useEffect`, {defaultTabTree, masterTree});
+		setMasterTree(defaultTabTree);
 	}, []);
 	useEffect(() => {
 		console.debug(`useEffect`, {masterTree});
