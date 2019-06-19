@@ -2,12 +2,33 @@ import React, {useState, useEffect, useContext, useRef, useCallback} from 'react
 import './engine.css';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import Split from "split.js";
+import Dexie from "dexie";
+import moment from "moment";
 
 const defaultEngineContext = {
 	version: "0.0.1",
 	broadcastChannelName: "negative"
 };
 export const EngineContext = React.createContext(defaultEngineContext);
+
+function Storage(props){
+	const createStore = async () => {
+		let db = new Dexie('engineDB');
+		db.version(1).stores({
+			guiConfigs: 'id, data'
+		});
+		await db.guiConfigs.put({id: 1, data: JSON.stringify({test: moment()})});
+		let guiElement = await db.guiConfigs.get('config');
+		console.debug(`Storage useEffect - created storgage`, {props, db, guiElement});
+	};
+	useEffect(()=>{
+		createStore();
+		return () => {
+			// cleanup
+		}
+	}, []);
+	return null;
+}
 
 function Menu(props) {
 	const [isOpen, setIsOpen] = useState(false);
@@ -132,11 +153,28 @@ function Menu(props) {
 	);
 }
 
-
 function Component(props) {
 	const splitPrefix = "component-split";
 	const [displayedComponentId, setDisplayedComponentId] = useState(null);
 	const [isMouseOver, setIsMouseOver] = useState(false);
+	const [broadCastChannel, setBroadCastChannel] = useState(false);
+	const events = {
+		mounted: "mounted"
+	};
+
+	useEffect(()=>{
+		console.debug(`Component useEffect - broadcast channel initialization`, {props});
+		let bc = new BroadcastChannel('engine-broadcast-channel');
+		bc.onmessage = (ev) => {
+			console.debug(`Component useEffect - broadcast channel onmessage`, {ev});
+		};
+		bc.postMessage(`${props.subComponentTree.id}, ${displayedComponentId}, ${events.mounted}`);
+		setBroadCastChannel(bc);
+		return () => {
+			// cleanup
+			bc.close();
+		}
+	}, []);
 
 	const getFlexDirection = () => {
 		console.debug(`getFlexDirection`, props);
@@ -187,9 +225,13 @@ function Component(props) {
 
 		let walkTree = (subComponentTree) => {
 			if (subComponentTree.id === props.subComponentTree.id) {
-				if (props.direction === props.directions.row) {
+				if (
+					props.subComponentTree.direction === props.directions.row
+				) {
 					subComponentTree.direction = props.directions.column;
-				} else {
+				} else if(
+					props.subComponentTree.direction === props.directions.column
+				) {
 					subComponentTree.direction = props.directions.row;
 				}
 			} else {
@@ -375,6 +417,7 @@ function Engine() {
 				right: 0,
 				bottom: 0
 			}}>
+				<Storage/>
 				<Router>
 					<Route path="/tab" render={(props) => {
 						return (

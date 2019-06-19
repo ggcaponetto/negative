@@ -1,6 +1,7 @@
 :root {
     --bg-dark: #000000;
-    --bg-light: #383838;
+    --bg-light-1: #383838;
+    --bg-light-2: #7a7a7a;
     --text-regular: #ffffff;
     --text-highlight: #a593a2;
     --color-primary-dark: #ffbc6d;
@@ -9,7 +10,7 @@
     --color-secondary-light: #6a6aa5;
 }
 .menu{
-    background-color: var(--bg-light);
+    background-color: var(--bg-dark);
 }
 .menu .menu-items{
     display: flex;
@@ -40,7 +41,7 @@
     width: 100%;
 }
 .gutter{
-    background-color: var(--bg-light);
+    background-color: var(--bg-light-2);
 }
 .gutter.gutter-horizontal {
     cursor: ew-resize;

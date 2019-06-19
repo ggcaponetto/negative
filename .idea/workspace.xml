@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c26eeacb-3389-4248-9da0-6b05ac3e9834" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/engine/engine.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/engine/engine.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/engine/engine.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/engine/engine.js" afterDir="false" />
     </list>
@@ -26,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/engine/engine.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="14" column="18" lean-forward="true" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
+            <state relative-caret-position="221">
+              <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -35,18 +37,16 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="263" column="6" lean-forward="true" selection-end-line="412" />
+            <state relative-caret-position="262">
+              <caret line="168" column="85" lean-forward="true" selection-end-line="455" />
               <folding>
                 <element signature="e#0#82#0" expanded="true" />
                 <element signature="n#!!block;n#Menu#0" />
                 <element signature="e#469#940#0" />
                 <element signature="e#970#1665#0" />
                 <element signature="e#1701#1833#0" />
-                <element signature="e#1866#1895#0" />
                 <element signature="e#1923#2565#0" />
                 <element signature="e#2592#2839#0" />
-                <element signature="n#!!block;n#Engine#0" />
                 <element signature="e#8291#8712#0" />
                 <element signature="e#8732#9520#0" />
               </folding>
@@ -66,10 +66,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ResizeBar</find>
-      <find>onBarEvent</find>
-      <find>getPositionInfo</find>
-      <find>e.preven</find>
       <find>current</find>
       <find>resi</find>
       <find>getResizeBarStyle</find>
@@ -94,8 +90,12 @@
       <find>Component</find>
       <find>&lt;Component</find>
       <find>getGutterDirection</find>
-      <find>getOppositeDirection</find>
       <find>Menu</find>
+      <find>getMenu</find>
+      <find>onDirectionFlip</find>
+      <find>flipDirection</find>
+      <find>getOppositeDirection</find>
+      <find>broad</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -175,6 +175,9 @@
     <configuration name="debug" type="JavascriptDebugType" engineId="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" uri="http://localhost:3000/engine" useFirstLineBreakpoints="true">
       <method v="2" />
     </configuration>
+    <configuration name="engine.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="engine.js" working-dir="$PROJECT_DIR$/src/components/engine">
+      <method v="2" />
+    </configuration>
     <configuration name="start" type="js.build_tools.npm" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="start" />
@@ -186,7 +189,13 @@
     <list>
       <item itemvalue="JavaScript Debug.debug" />
       <item itemvalue="npm.start" />
+      <item itemvalue="Node.js.engine.js" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.engine.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -223,12 +232,12 @@
       <workItem from="1560753050810" duration="33000" />
       <workItem from="1560808035920" duration="3666000" />
       <workItem from="1560955827376" duration="1018000" />
-      <workItem from="1560970524250" duration="4393000" />
+      <workItem from="1560970524250" duration="9477000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="150245000" />
+    <option name="totallyTimeSpent" value="155329000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1549" height="846" extended-state="6" />
@@ -249,7 +258,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.34487733" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.27994227" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -332,25 +341,23 @@
     <entry file="file://$PROJECT_DIR$/src/components/tab/tab.js" />
     <entry file="file://$PROJECT_DIR$/src/components/engine/engine.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="14" column="18" lean-forward="true" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
+        <state relative-caret-position="221">
+          <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="263" column="6" lean-forward="true" selection-end-line="412" />
+        <state relative-caret-position="262">
+          <caret line="168" column="85" lean-forward="true" selection-end-line="455" />
           <folding>
             <element signature="e#0#82#0" expanded="true" />
             <element signature="n#!!block;n#Menu#0" />
             <element signature="e#469#940#0" />
             <element signature="e#970#1665#0" />
             <element signature="e#1701#1833#0" />
-            <element signature="e#1866#1895#0" />
             <element signature="e#1923#2565#0" />
             <element signature="e#2592#2839#0" />
-            <element signature="n#!!block;n#Engine#0" />
             <element signature="e#8291#8712#0" />
             <element signature="e#8732#9520#0" />
           </folding>
