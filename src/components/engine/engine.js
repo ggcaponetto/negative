@@ -12,21 +12,44 @@ const defaultEngineContext = {
 export const EngineContext = React.createContext(defaultEngineContext);
 
 function Storage(props){
-	const createStore = async () => {
-		let db = new Dexie('engineDB');
-		db.version(1).stores({
-			guiConfigs: 'id, data'
-		});
-		await db.guiConfigs.put({id: 1, data: JSON.stringify({test: moment()})});
-		let guiElement = await db.guiConfigs.get('config');
-		console.debug(`Storage useEffect - created storgage`, {props, db, guiElement});
-	};
+	let [db, setDb] = useState(null);
 	useEffect(()=>{
+		const createStore = async () => {
+			let dexieDb = new Dexie('engineDB');
+			dexieDb.version(1).stores({
+				masterTrees: 'id, data'
+			});
+			setDb(dexieDb);
+			console.debug(`Storage useEffect - created storgage db`, {props, dexieDb});
+		};
 		createStore();
 		return () => {
 			// cleanup
 		}
 	}, []);
+	useEffect(()=>{
+		const processMessage = async (message) => {
+			console.debug(`Storage useEffect - processMessage`, {message});
+			if(message === props.events.onSaveConfig){
+				await db.masterTrees.put({id: 1, data: props.masterTree});
+			}
+			if(message === props.events.onLoadConfig){
+				let tree = await db.masterTrees.get(1);
+				console.debug(`Storage processMessage - onLoadConfig`, {props, tree});
+				props.updateMasterTree(tree.data);
+			}
+		};
+		let bc = new BroadcastChannel('engine-broadcast-channel');
+		bc.onmessage = (ev) => {
+			console.debug(`Storage useEffect - broadcast channel onmessage`, ev.data);
+			if(db){
+				processMessage(ev.data);
+			}
+		};
+		return () => {
+			// cleanup
+		}
+	}, [db]);
 	return null;
 }
 
@@ -125,6 +148,16 @@ function Menu(props) {
 		let win = window.open(`${window.location.origin}/tab`, '_blank');
 		win.focus();
 	};
+	const onSaveUiConfig = () => {
+		if(props.broadcastChannel){
+			props.broadcastChannel.postMessage(`${props.events.onSaveConfig}`);
+		}
+	};
+	const onLoadUiConfig = () => {
+		if(props.broadcastChannel){
+			props.broadcastChannel.postMessage(`${props.events.onLoadConfig}`);
+		}
+	};
 	const getMenuItems = () => {
 		if (isOpen) {
 			return (
@@ -134,6 +167,8 @@ function Menu(props) {
 					<button onClick={onSelfRemove}>remove self</button>
 					<button onClick={onChildrenRemove}>remove children</button>
 					<button onClick={onDirectionFlip}>change to {props.getOppositeDirection()}</button>
+					<button onClick={onSaveUiConfig}>save ui</button>
+					<button onClick={onLoadUiConfig}>load ui</button>
 					{getSelect()}
 				</div>
 			)
@@ -157,15 +192,11 @@ function Component(props) {
 	const splitPrefix = "component-split";
 	const [displayedComponentId, setDisplayedComponentId] = useState(null);
 	const [isMouseOver, setIsMouseOver] = useState(false);
-	const [broadCastChannel, setBroadCastChannel] = useState(null);
-	const events = {
-		mounted: "mounted",
-		mouseOver: "mouseOver"
-	};
+	const [broadcastChannel, setBroadcastChannel] = useState(null);
 	useEffect(()=>{
 		console.debug(`Component useEffect - broadcast channel - isMouseOver`, {props});
-		if(broadCastChannel){
-			broadCastChannel.postMessage(`${props.subComponentTree.id}, ${displayedComponentId}, ${events.mouseOver}`);
+		if(broadcastChannel){
+			broadcastChannel.postMessage(`${props.events.onMount}`);
 		}
 	}, [isMouseOver]);
 
@@ -173,10 +204,10 @@ function Component(props) {
 		console.debug(`Component useEffect - broadcast channel initialization`, {props});
 		let bc = new BroadcastChannel('engine-broadcast-channel');
 		bc.onmessage = (ev) => {
-			console.debug(`Component useEffect - broadcast channel onmessage`, ev.data);
+			// console.debug(`Component useEffect - broadcast channel onmessage`, ev.data);
 		};
-		bc.postMessage(`${props.subComponentTree.id}, ${displayedComponentId}, ${events.mounted}`);
-		setBroadCastChannel(bc);
+		bc.postMessage(`${props.events.onMount}`);
+		setBroadcastChannel(bc);
 		return () => {
 			// cleanup
 			bc.close();
@@ -280,6 +311,7 @@ function Component(props) {
 						<Component
 							key={i}
 							directions={props.directions}
+							events={props.events}
 							masterTree={props.masterTree}
 							subComponentTree={subComponentTree}
 							updateMasterTree={props.updateMasterTree}
@@ -316,6 +348,8 @@ function Component(props) {
 			return (
 				<Menu
 					{...props}
+					events={props.events}
+					broadcastChannel={broadcastChannel}
 					flipDirection={flipDirection}
 					getOppositeDirection={getOppositeDirection}
 					setDisplayedComponentId={(componentId) => {
@@ -356,6 +390,11 @@ function Engine() {
 	const [componentIdArray, setComponentIdArray] = useState([
 		"container", "threejs", "console", "filetree"
 	]);
+	const componentEvents = {
+		onMount: "onMount",
+		onSaveConfig: "onSaveConfig",
+		onLoadConfig: "onLoadConfig",
+	};
 	const directions = {row: "row", column: "column"};
 	const defaultTabTree = {
 		id: "0",
@@ -424,13 +463,21 @@ function Engine() {
 				right: 0,
 				bottom: 0
 			}}>
-				<Storage/>
+				<Storage
+					masterTree={masterTree}
+					events={componentEvents}
+					updateMasterTree={(newTree) => {
+						console.debug(`Engine updateMasterTree`, {newTree, masterTree});
+						setMasterTree(newTree);
+					}}
+				/>
 				<Router>
 					<Route path="/tab" render={(props) => {
 						return (
 							<Component
 								{...props}
 								directions={directions}
+								events={componentEvents}
 								masterTree={masterTree}
 								subComponentTree={masterTree}
 								updateMasterTree={(newTree) => {

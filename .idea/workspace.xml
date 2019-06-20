@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c26eeacb-3389-4248-9da0-6b05ac3e9834" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/engine/engine.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/engine/engine.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
@@ -24,7 +25,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/engine/engine.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
+            <state relative-caret-position="731">
               <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
             </state>
           </provider>
@@ -33,20 +34,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="171" column="19" lean-forward="true" selection-start-line="171" selection-start-column="19" selection-end-line="171" selection-end-column="19" />
+            <state relative-caret-position="610">
+              <caret line="386" column="55" lean-forward="true" selection-end-line="509" />
               <folding>
                 <element signature="e#0#82#0" expanded="true" />
-                <element signature="e#469#940#0" />
-                <element signature="e#970#1665#0" />
-                <element signature="e#1701#1833#0" />
-                <element signature="e#1866#1895#0" />
-                <element signature="e#1923#2565#0" />
-                <element signature="e#2592#2839#0" />
-                <element signature="e#8291#8712#0" />
-                <element signature="e#8732#9520#0" />
-                <element signature="e#9544#9641#0" />
-                <element signature="e#9665#9713#0" />
+                <element signature="n#!!block;n#Menu#0" />
+                <element signature="e#3500#3946#0" />
+                <element signature="e#9934#9986#0" />
+                <element signature="e#10626#10716#0" />
+                <element signature="e#10065#10486#0" />
               </folding>
             </state>
           </provider>
@@ -64,18 +60,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>resi</find>
-      <find>getResizeBarStyle</find>
-      <find>section</find>
-      <find>one</find>
-      <find>UIContainer</find>
-      <find>setMasterTree</find>
-      <find>updateMasterTree</find>
-      <find>rela</find>
-      <find>setDisplayedComponentId</find>
-      <find>isUiComposerOpen</find>
-      <find>isUiComposerOpenRef</find>
-      <find>ctrl</find>
       <find>ontab</find>
       <find>defaultTabTree</find>
       <find>subComponentTree</find>
@@ -85,7 +69,6 @@
       <find>direction</find>
       <find>gutter</find>
       <find>Component</find>
-      <find>&lt;Component</find>
       <find>getGutterDirection</find>
       <find>Menu</find>
       <find>getMenu</find>
@@ -94,6 +77,19 @@
       <find>getOppositeDirection</find>
       <find>broad</find>
       <find>console.debug</find>
+      <find>&lt;Menu</find>
+      <find>broadcastChannel</find>
+      <find>setBroadCastChannel</find>
+      <find>loadUi</find>
+      <find>event.</find>
+      <find>events.</find>
+      <find>events.on</find>
+      <find>onSaveConfig</find>
+      <find>message</find>
+      <find>events</find>
+      <find>&lt;Component</find>
+      <find>component</find>
+      <find>Storage</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -114,6 +110,12 @@
   <component name="MacroExpansionManager">
     <option name="directoryName" value="wCfVZHwq" />
   </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
+  </component>
   <component name="PhpServers">
     <servers />
   </component>
@@ -128,7 +130,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -140,6 +141,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -186,8 +188,8 @@
     </configuration>
     <list>
       <item itemvalue="JavaScript Debug.debug" />
-      <item itemvalue="npm.start" />
       <item itemvalue="Node.js.engine.js" />
+      <item itemvalue="npm.start" />
     </list>
     <recent_temporary>
       <list>
@@ -230,32 +232,35 @@
       <workItem from="1560753050810" duration="33000" />
       <workItem from="1560808035920" duration="3666000" />
       <workItem from="1560955827376" duration="1018000" />
-      <workItem from="1560970524250" duration="10633000" />
+      <workItem from="1560970524250" duration="10654000" />
+      <workItem from="1561012841421" duration="37000" />
+      <workItem from="1561051948667" duration="2964000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="156485000" />
+    <option name="totallyTimeSpent" value="159507000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1549" height="846" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1186" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.691954" visible="true" weight="0.19382964" />
-      <window_info id="Structure" order="1" sideWeight="0.30804598" side_tool="true" visible="true" weight="0.19382964" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6891892" visible="true" weight="0.1977612" />
+      <window_info id="Structure" order="1" sideWeight="0.3108108" side_tool="true" visible="true" weight="0.1977612" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
       <window_info id="Learn" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.4227994" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.2815534" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.2776699" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.37229437" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.37184465" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -263,7 +268,7 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Cargo" order="4" />
-      <window_info anchor="right" id="Maven" order="5" />
+      <window_info anchor="right" id="Maven" order="5" weight="0.32995737" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="JSON Utils" order="7" />
       <window_info anchor="right" id="Database" order="8" />
@@ -338,27 +343,22 @@
     <entry file="file://$PROJECT_DIR$/src/components/tab/tab.js" />
     <entry file="file://$PROJECT_DIR$/src/components/engine/engine.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
+        <state relative-caret-position="731">
           <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/engine/engine.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="171" column="19" lean-forward="true" selection-start-line="171" selection-start-column="19" selection-end-line="171" selection-end-column="19" />
+        <state relative-caret-position="610">
+          <caret line="386" column="55" lean-forward="true" selection-end-line="509" />
           <folding>
             <element signature="e#0#82#0" expanded="true" />
-            <element signature="e#469#940#0" />
-            <element signature="e#970#1665#0" />
-            <element signature="e#1701#1833#0" />
-            <element signature="e#1866#1895#0" />
-            <element signature="e#1923#2565#0" />
-            <element signature="e#2592#2839#0" />
-            <element signature="e#8291#8712#0" />
-            <element signature="e#8732#9520#0" />
-            <element signature="e#9544#9641#0" />
-            <element signature="e#9665#9713#0" />
+            <element signature="n#!!block;n#Menu#0" />
+            <element signature="e#3500#3946#0" />
+            <element signature="e#9934#9986#0" />
+            <element signature="e#10626#10716#0" />
+            <element signature="e#10065#10486#0" />
           </folding>
         </state>
       </provider>
